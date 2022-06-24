@@ -1,0 +1,12 @@
+html,body{
+  margin:0;
+  padding: 0;
+}
+header{
+  height: 20vh;
+}
+.main{
+  display:grid;
+  grid-template-columns: 4fr 1fr;
+  
+}
