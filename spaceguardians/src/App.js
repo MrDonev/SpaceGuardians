@@ -8,6 +8,7 @@ function App() {
       <Header />
       <main id="main">
         <div id="game">
+          {console.log('div created')}
           <GameComponent />
         </div>
         <UserProfile />

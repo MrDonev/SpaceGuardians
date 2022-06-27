@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
-import {useState, useEffect}  from 'react'
+
 const GameComponent =()=>{
+
     function preload() {
       this.load.setBaseURL('http://labs.phaser.io')
       this.load.image('sky', 'assets/skies/space3.png')
@@ -44,8 +45,12 @@ const GameComponent =()=>{
         create: create
       }
     }
-    
- const game = new Phaser.Game(config)
+    console.log(document.getElementById('game'))
+setTimeout(()=>{if(document.getElementById('game')!==null){
+  const game = new Phaser.Game(config)
+  
+}},500)
+
 }
 
 export default GameComponent
