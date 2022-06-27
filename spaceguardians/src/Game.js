@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-
+import {useState, useEffect}  from 'react'
 const GameComponent =()=>{
     function preload() {
       this.load.setBaseURL('http://labs.phaser.io')
@@ -32,6 +32,7 @@ const GameComponent =()=>{
       type: Phaser.AUTO,
       width: 800,
       height: 600,
+      parent:'game',
       physics: {
         default: 'arcade',
         arcade: {
@@ -44,7 +45,7 @@ const GameComponent =()=>{
       }
     }
     
-    const game = new Phaser.Game(config)
+ const game = new Phaser.Game(config)
 }
 
 export default GameComponent

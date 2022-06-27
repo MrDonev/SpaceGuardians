@@ -3,10 +3,29 @@ html,body{
   padding: 0;
 }
 header{
+  margin-bottom:0.2em;
   height: 20vh;
+  width: 99vw;
+  border: 1px solid red;
 }
-.main{
+#main{
   display:grid;
-  grid-template-columns: 4fr 1fr;
-  
+  grid-template-columns: 3fr 2fr;
+  grid-template-areas:
+   'game game profile'
+   'game game profile'
+   'game game profile';
+}
+#game{
+  margin-right:0.2em;
+  border:1px solid red;
+  width: 820px;
+  height: 620px;
+  grid-area: game;
+}
+#userPofile{
+  border: 1px solid red;
+  text-align: center;
+  grid-area: profile;
+  width: 30vw;
 }
