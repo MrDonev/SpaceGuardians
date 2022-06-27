@@ -14,7 +14,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 function App() {
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <AuthContextProvider>
         <Routes>
           <Route path='/' element={<Signin />} />
@@ -29,12 +29,12 @@ function App() {
           />
         </Routes>
       </AuthContextProvider>
-      <main id="main">
-        <div id="game">
+      {/* <main id="main"> */}
+        {/* <div id="game"> */}
           {/* <GameComponent /> */}
-        </div>
-        <UserProfile />
-      </main>
+        {/* </div> */}
+        {/* <UserProfile /> */}
+      {/* </main> */}
     </div>
   );
 }
