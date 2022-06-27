@@ -1,55 +1,57 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../context/AuthContext';
-import '../index.css'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
+import "../index.css";
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { createUser } = UserAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     try {
       await createUser(email, password);
-      navigate('/account')
+      navigate("/account");
     } catch (e) {
       setError(e.message);
-      console.log(e.message);
+      if (e.message === "Firebase: Error (auth/email-already-in-use).") {
+        return alert("Account already exists");
+      } else {
+        return alert("Wrong email or password");
+      }
     }
   };
   return (
-    <div className='max-w-[700px] mx-auto my-16 p-4'>
+    <div className="max-w-[700px] mx-auto my-16 p-4">
       <div>
-        <h1 className='text-2xl font-bold py-2'>Sign up here</h1>
-        <p className='py-2'>
-          Already have an account ?{' '}
-          <Link to='/' className='underline'>
+        <h1 className="text-2xl font-bold py-2">Sign up here</h1>
+        <p className="py-2">
+          Already have an account ?{" "}
+          <Link to="/" className="underline">
             Sign in.
           </Link>
         </p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className='flex flex-col py-2'>
-          <label className='py-2 font-medium'>Email Address</label>
+        <div className="flex flex-col py-2">
+          <label className="py-2 font-medium">Email Address</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
-            className='input'
-            type='email'
+            className="input"
+            type="email"
           />
         </div>
-        <div className='flex flex-col py-2'>
-          <label className='py-2 font-medium'>Password</label>
+        <div className="flex flex-col py-2">
+          <label className="py-2 font-medium">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
-            className='input'
-            type='password'
+            className="input"
+            type="password"
           />
         </div>
-        <button className='button'>
-          Sign Up
-        </button>
+        <button className="button">Sign Up</button>
       </form>
     </div>
   );
