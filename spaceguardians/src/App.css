@@ -23,6 +23,9 @@ header{
   height: 620px;
   grid-area: game;
 }
+#game canvas{
+  margin:0.5em;
+}
 #userPofile{
   border: 1px solid red;
   text-align: center;

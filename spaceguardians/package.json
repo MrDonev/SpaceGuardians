@@ -24,6 +24,10 @@
       "react-app/jest"
     ]
   },
+  "staticFiles": {
+    "staticPath": "public",
+    "watcherGlob": "**"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
