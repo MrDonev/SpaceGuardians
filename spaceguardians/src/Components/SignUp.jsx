@@ -18,8 +18,9 @@ const Signup = () => {
         return data;
       })
       .then((data) => {
-        console.log(data);
-        writeUserData(45, data, data);
+        const p = data.replaceAll(".", "_");
+
+        writeUserData(p, data, data);
         navigate("/account");
       })
       .catch((e) => {
