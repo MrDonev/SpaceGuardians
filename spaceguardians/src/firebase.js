@@ -63,23 +63,17 @@ export const writeUserData = (userId, name, email) => {
     username: name,
     email: email,
   });
+};
+export const readUserData = (userId) => {
+  const db = getDatabase(app);
   const userRef = ref(db, "users/" + userId + "/email");
-  onValue(userRef, (snapshot) => {
+  let reader = "hi";
+  onValue(userRef, (snapshot, reader) => {
     const data = snapshot.val();
     console.log(data);
+    return (reader = data);
   });
+  return reader;
 };
 
-writeUserData("andy", "awu", "awu@gmail.com");
-writeUserData("Tom", "awu", "awu@gmail.com");
-
-// export const logout = () => {
-//   auth.signOut()
-//   // signOut(auth)
-//   .then((result) => {
-//     console.log(result, "<<< result");
-//   })
-//   .catch((error) => {
-//     alert(error);
-//   })
-// }
+console.log(readUserData("andy"), "<<<end");
