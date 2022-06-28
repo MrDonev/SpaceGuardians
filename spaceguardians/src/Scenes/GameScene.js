@@ -16,29 +16,22 @@ class GameScene extends Phaser.Scene {
     this.load.image('strongestInvader', '../assets/strongestEnemy.png');
   }
   create() {
-    console.log(this.game);
-
-
-    //this.world.setBounds(0,0, 800, 600);
-
-    //this.player.body.collideWorldBounds = true;
+    this.physics.world.setBounds(0, 0, 800, 600);
 
     this.starfield = this.add.image(0, 0, 'starfield').setScale(3);
-    this.player = this.add.image(400, 530, 'player');
+    this.player = this.physics.add.image(400, 530, 'player');
+    this.player.setCollideWorldBounds(true)
     //creating the aliens
     this.aliens = this.add.group();
     this.aliens.enableBody = true;
     this.aliens.physicsBodyType = Phaser.Physics.ARCADE;
     this.createAliens();
 
-    this.physics.arcade(this.player, true);
-
   }
   createAliens() {
     for (let y = 4; y < 7; y++) {
       for (let x = 4; x < 14; x++) {
         this.alien = this.aliens.create(x * 48, y * 35, 'blueInvader');
-      
       }
     }
     for (let y = 3; y < 4; y++) {
@@ -57,16 +50,11 @@ class GameScene extends Phaser.Scene {
           this.alien = this.aliens.create(x * 48, y * 35, 'strongestInvader');
         }
       }
-
     }
-     this.aliens.children.iterate((child) => {
-      child.x += 5
-     })
-
-     
+    // this.aliens.children.iterate((child) => {
+    //   child.x += 5;
+    // });
   }
-
-
 
   descend() {
     this.aliens.y += 10;
@@ -74,18 +62,15 @@ class GameScene extends Phaser.Scene {
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    if (cursors.left.isDown){
+    if (cursors.left.isDown) {
       this.player.x -= 3;
     }
-    if (cursors.right.isDown){
+    if (cursors.right.isDown) {
       this.player.x += 3;
     }
-
-
   }
 }
 
 export default GameScene;
-
 
 //game.add.tween(gameTitle).to({x: 300}, 2000, Phaser.Easing.Cubic.InOut, true, 0);

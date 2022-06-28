@@ -5,7 +5,7 @@ html,body{
 header{
   margin-bottom:0.2em;
   height: 20vh;
-  width: 99vw;
+  width: 100%;
   border: 1px solid red;
 }
 #main{
