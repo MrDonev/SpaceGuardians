@@ -3,7 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import "../index.css";
 
-import { signInWithGoogle, logout, anonymousSignIn } from "../firebase";
+import {
+  signInWithGoogle,
+  logout,
+  anonymousSignIn,
+  writeUserData,
+} from "../firebase";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -58,9 +63,7 @@ const Signin = () => {
         <button className="button">Sign In</button>
 
         <button onClick={signInWithGoogle}>Sign in with Google</button>
-        <h1>{localStorage.getItem("name")}</h1>
-        <h1>{localStorage.getItem("email")}</h1>
-        <img src={localStorage.getItem("userPhotoUrl")} alt="user photo" />
+
         {/* <button onClick={ logout }>Sign out</button>
         <h1>signed Out</h1> */}
       </form>

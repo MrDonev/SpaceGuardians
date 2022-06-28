@@ -2,26 +2,34 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import "../index.css";
+import { writeUserData } from "../firebase";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    try {
-      await createUser(email, password);
-      navigate("/account");
-    } catch (e) {
-      setError(e.message);
-      if (e.message === "Firebase: Error (auth/email-already-in-use).") {
-        return alert("Account already exists");
-      } else {
-        return alert("Wrong email or password");
-      }
-    }
+    createUser(email, password)
+      .then(() => {
+        const data = email;
+        return data;
+      })
+      .then((data) => {
+        console.log(data);
+        writeUserData(45, data, data);
+        navigate("/account");
+      })
+      .catch((e) => {
+        setError(e.message);
+        if (e.message === "Firebase: Error (auth/email-already-in-use).") {
+          return alert("Account already exists");
+        } else {
+          return alert("Wrong email or password");
+        }
+      });
   };
   return (
     <div className="max-w-[700px] mx-auto my-16 p-4">

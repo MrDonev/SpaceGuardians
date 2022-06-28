@@ -29,13 +29,11 @@ const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
+      console.log(result.user);
       const name = result.user.displayName;
       const email = result.user.email;
-      const userPhotoUrl = result.user.photoURL;
-
-      localStorage.setItem("name", name);
-      localStorage.setItem("email", email);
-      localStorage.setItem("userPhotoUrl", userPhotoUrl);
+      const username = result.user.displayName;
+      writeUserData(name, username, email);
     })
     .catch((error) => {
       alert(error);
@@ -59,35 +57,21 @@ export const anonymousSignIn = () => {
     });
 };
 
-function writeUserData(
-  userId,
-  name,
-  email,
-  score,
-  level,
-
-  url,
-  position
-) {
+export const writeUserData = (userId, name, email) => {
   const db = getDatabase(app);
   set(ref(db, "users/" + userId), {
     username: name,
     email: email,
-    highscore: score,
-    level: level,
-
-    avatar: url,
-    scoreboardPosition: position,
   });
   const userRef = ref(db, "users/" + userId + "/email");
   onValue(userRef, (snapshot) => {
     const data = snapshot.val();
     console.log(data);
   });
-}
+};
 
-writeUserData("andy", "awu", "awu@gmail.com", 25, 34, "sfsdfs", 12);
-writeUserData("Tom", "awu", "awu@gmail.com", 25, 34, "sfsdfs", 9);
+writeUserData("andy", "awu", "awu@gmail.com");
+writeUserData("Tom", "awu", "awu@gmail.com");
 
 // export const logout = () => {
 //   auth.signOut()
