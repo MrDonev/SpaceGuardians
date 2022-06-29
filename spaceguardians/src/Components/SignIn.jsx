@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/authContext";
 import "../index.css";
+import { SignInWithGoogle } from "./SigninWithGoogle";
+import {SignInAsAGuest} from './SignInAsAGuest'
 
 import {
   signInWithGoogle,
@@ -62,12 +64,12 @@ const Signin = () => {
         </div>
         <button className="button">Sign In</button>
 
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <SignInWithGoogle />
 
         {/* <button onClick={ logout }>Sign out</button>
         <h1>signed Out</h1> */}
       </form>
-      <button onClick={anonymousSignIn}>Sign in as a guest</button>
+     <SignInAsAGuest />
       <h1>{}</h1>
     </div>
   );

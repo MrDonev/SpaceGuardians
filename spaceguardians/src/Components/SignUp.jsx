@@ -4,8 +4,7 @@ import { UserAuth } from "../context/authContext";
 import "../index.css";
 import { writeUserData } from "../firebase";
 
-export let testfunc1 = null;
-console.log(testfunc1, "<<< testfunc1 in singUp");
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
