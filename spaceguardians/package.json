@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "spaceguardians",
   "version": "0.1.0",
   "private": true,
@@ -14,6 +15,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -38,4 +40,5 @@
       "last 1 safari version"
     ]
   }
+  
 }

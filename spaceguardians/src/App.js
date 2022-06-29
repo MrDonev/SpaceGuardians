@@ -1,15 +1,15 @@
-import GameComponent from './Game';
+import GameComponent from './Game.js';
 import './App.css';
-import Header from './Components/Header';
-import UserProfile from './Components/UserProfile';
+import Header from './Components/Header.jsx';
+import UserProfile from './Components/UserProfile.jsx';
 
 import React from 'react';
-import Signin from './Components/SignIn';
-import Signup from './Components/SignUp';
-import Account from './Components/Account';
+import Signin from './Components/SignIn.jsx';
+import Signup from './Components/SignUp.jsx';
+import Account from './Components/Account.jsx';
 import { Route, Routes } from 'react-router-dom';
-import { AuthContextProvider } from './context/AuthContext';
-import ProtectedRoute from './Components/ProtectedRoute';
+import { AuthContextProvider } from './context/authContext.js';
+import ProtectedRoute from './Components/ProtectedRoute.js';
 
 function App() {
   return (

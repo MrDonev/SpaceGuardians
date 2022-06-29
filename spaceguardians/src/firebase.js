@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -6,7 +7,6 @@ import {
   // signOut,
   signInAnonymously,
 } from "firebase/auth";
-import { getDatabase, ref, set, onValue } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfU9SJ5JQ4m47DI_wtZiG-xdFHlZ73rvE",
@@ -39,10 +39,11 @@ export const signInWithGoogle = () => {
       alert(error);
     });
 };
+
 export const anonymousSignIn = () => {
   signInAnonymously(auth)
     .then((result) => {
-      console.log(result);
+      console.log(result, "<<< result in signInAnonymously");
       const uid = result.user.uid;
 
       localStorage.setItem("uid", uid);
@@ -64,13 +65,14 @@ export const writeUserData = (userId, name, email) => {
     email: email,
   });
 };
+
 export const readUserData = (userId) => {
   const db = getDatabase(app);
   const userRef = ref(db, "users/" + userId + "/email");
   let reader = "hi";
   onValue(userRef, (snapshot, reader) => {
     const data = snapshot.val();
-    console.log(data);
+    console.log(data, "<<< data inside the readUserData function");
     return (reader = data);
   });
   return reader;
