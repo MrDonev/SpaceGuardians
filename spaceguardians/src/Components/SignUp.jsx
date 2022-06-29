@@ -3,12 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/authContext";
 import "../index.css";
 import { writeUserData } from "../firebase";
+
+export let testfunc1 = null;
+console.log(testfunc1, "<<< testfunc1 in singUp");
+
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { createUser } = UserAuth();
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");

@@ -7,6 +7,10 @@ import {
   // signOut,
   signInAnonymously,
 } from "firebase/auth";
+import { useState } from "react";
+
+import testfunc1 from './Components/SignUp.jsx';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfU9SJ5JQ4m47DI_wtZiG-xdFHlZ73rvE",
@@ -66,16 +70,48 @@ export const writeUserData = (userId, name, email) => {
   });
 };
 
+// reading the user data from the Firebase Realtime db
+
+var cont3;
+
+function updateSomething(something) {
+  testfunc1 = something;
+}
+
 export const readUserData = (userId) => {
+
   const db = getDatabase(app);
+  console.log(db, "<<< db");
   const userRef = ref(db, "users/" + userId + "/email");
-  let reader = "hi";
-  onValue(userRef, (snapshot, reader) => {
+  console.log(userRef, "<<< userRef");
+
+ let d;
+
+  onValue(userRef, (snapshot) => {
+
     const data = snapshot.val();
-    console.log(data, "<<< data inside the readUserData function");
-    return (reader = data);
+
+    const cont2 = updateSomething(data);
+    cont3 = cont2;
+
+    localStorage.setItem('emailLocal',data);
   });
-  return reader;
+  
 };
 
-console.log(readUserData("andy"), "<<<end");
+// localStorage.setItem('info',info)
+// //outside the firebase function
+// localStorage.getItem('info');
+
+
+// async getLoggedInUser(id: string): Promise<User> {
+//   const db = getDatabase();
+//   var user: User;
+//   const snapshot = await get(ref(db, '/users/' + id))
+//   user = snapshot.val();
+//   return user;
+// }
+
+
+const temp = readUserData("andy"); 
+console.log(temp, "<<< end");
