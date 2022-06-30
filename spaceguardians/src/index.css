@@ -88,3 +88,19 @@ button:hover {
 #chk:checked ~ .signup label {
   transform: scale(0.6);
 }
+
+.Header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.game {
+  margin-right: 100%;
+  justify-content: center;
+  align-items: center;
+}

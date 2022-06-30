@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/authContext";
 import "../index.css";
 import { SignInWithGoogle } from "./SigninWithGoogle";
-import {SignInAsAGuest} from './SignInAsAGuest'
+import { SignInAsAGuest } from "./SignInAsAGuest";
 
 import {
   signInWithGoogle,
@@ -69,7 +69,7 @@ const Signin = () => {
         {/* <button onClick={ logout }>Sign out</button>
         <h1>signed Out</h1> */}
       </form>
-     <SignInAsAGuest />
+      <SignInAsAGuest />
       <h1>{}</h1>
     </div>
   );

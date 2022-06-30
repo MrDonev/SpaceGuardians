@@ -6,10 +6,7 @@ import {
   signInWithPopup,
   signInAnonymously,
 } from "firebase/auth";
-
-
-
-
+import { useState } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfU9SJ5JQ4m47DI_wtZiG-xdFHlZ73rvE",
@@ -21,28 +18,12 @@ const firebaseConfig = {
   databaseURL:
     "https://spaceguardians-d5924-default-rtdb.europe-west1.firebasedatabase.app/",
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export default app;
 
 const provider = new GoogleAuthProvider();
-
-export const signInWithGoogle = () => {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      console.log(result.user);
-      const name = result.user.displayName;
-      const email = result.user.email;
-      const username = result.user.displayName;
-      writeUserData(name, username, email);
-      
-    })
-    .catch((error) => {
-      alert(error);
-    });
-};
 
 export const anonymousSignIn = () => {
   signInAnonymously(auth)
@@ -66,28 +47,24 @@ export const writeUserData = (userId, name, email) => {
   set(ref(db, "users/" + userId), {
     username: name,
     email: email,
+    highScore: 0,
   });
 };
 
 // reading the user data from the Firebase Realtime db
-
-
+function callUser(data) {
+  console.log(data);
+  return data;
+}
 
 export const readUserData = (userId) => {
-  
   const db = getDatabase(app);
-  const userRef = ref(db, "users/" + userId + "/email");
-
+  const userRef = ref(db, "users/" + userId + "/username");
 
   onValue(userRef, (snapshot) => {
-
     const data = snapshot.val();
-    
-  
-
+    console.log(data);
+    return data;
   });
- 
 };
-
-
-
+console.log(readUserData("andy"));

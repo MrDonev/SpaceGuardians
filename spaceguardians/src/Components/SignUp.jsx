@@ -4,8 +4,6 @@ import { UserAuth } from "../context/authContext";
 import "../index.css";
 import { writeUserData } from "../firebase";
 
-
-
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +22,7 @@ const Signup = () => {
       .then((data) => {
         const p = data.replaceAll(".", "_");
 
-        writeUserData(p, data, data);
+        writeUserData(p, data, data, 0);
         navigate("/account");
       })
       .catch((e) => {
