@@ -14,8 +14,9 @@ class GameScene extends Phaser.Scene {
     this.lastBlueInvaderLength = 30;
     this.lastyellowInvaderLength = 8;
     this.lastRedInvaderLength = 6;
-    this.lastStronInvaderLength = 2;
+    this.lastStrongInvaderLength = 2;
     this.started = false;
+    this.level=1;
   }
   preload() {
     this.load.image('starfield', '../assets/bkg.jpg');
@@ -31,6 +32,7 @@ class GameScene extends Phaser.Scene {
     this.starfield = this.add.image(0, 0, 'starfield').setScale(3);
     this.player = this.physics.add.image(400, 530, 'player');
     this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
+    this.levelTable = this.add.text(710,20,`Level : ${this.level}`)
     this.player.setCollideWorldBounds(true);
     // creating the bullet
     this.lastFired = null;
@@ -79,8 +81,9 @@ class GameScene extends Phaser.Scene {
             this.blueInvader[`blueInvader-${blueInvaderCounter}`],
             0
           );
-        this.blueInvader[`blueInvader-${blueInvaderCounter}`].id =
-          blueInvaderCounter;
+        this.blueInvader[
+          `blueInvader-${blueInvaderCounter}`
+        ].id = `blueInvader-${blueInvaderCounter}`;
         this.physics.add.collider(
           this.bullets,
           this.blueInvader[`blueInvader-${blueInvaderCounter}`],
@@ -99,8 +102,9 @@ class GameScene extends Phaser.Scene {
             this.yellowInvader[`yellowInvader-${yellowInvaderCounter}`],
             0
           );
-        this.yellowInvader[`yellowInvader-${yellowInvaderCounter}`].id =
-          yellowInvaderCounter;
+        this.yellowInvader[
+          `yellowInvader-${yellowInvaderCounter}`
+        ].id = `yellowInvader-${yellowInvaderCounter}`;
         this.physics.add.collider(
           this.bullets,
           this.yellowInvader[`yellowInvader-${yellowInvaderCounter}`],
@@ -112,7 +116,6 @@ class GameScene extends Phaser.Scene {
     for (let y = 2; y < 3; y++) {
       for (let x = 6; x <= 11; x++) {
         ++redInvaderCounter;
-        this.redInvader = this.aliens.create(x * 48, y * 35, 'redBlueInvader');
         this.redInvader[`redInvader-${redInvaderCounter}`] = this.aliens.create(
           x * 48,
           y * 35,
@@ -123,8 +126,9 @@ class GameScene extends Phaser.Scene {
             this.redInvader[`redInvader-${redInvaderCounter}`],
             0
           );
-        this.redInvader[`redInvader-${redInvaderCounter}`].id =
-          redInvaderCounter;
+        this.redInvader[
+          `redInvader-${redInvaderCounter}`
+        ].id = `redInvader-${redInvaderCounter}`;
         this.physics.add.collider(
           this.bullets,
           this.redInvader[`redInvader-${redInvaderCounter}`],
@@ -136,10 +140,30 @@ class GameScene extends Phaser.Scene {
     for (let y = 1; y < 2; y++) {
       for (let x = 7; x <= 10; x++) {
         if (x === 7 || x === 10) {
-          this.strongestInvader = this.aliens.create(
+          ++strongestInvaderCounter;
+          this.strongestInvader[`strongestInvader-${strongestInvaderCounter}`] = this.aliens.create(
             x * 48,
             y * 35,
             'strongestInvader'
+          );
+          console.log(this.strongestInvader)
+          this.strongestInvader[`strongestInvader-${strongestInvaderCounter}`] =
+            this.physics.add.existing(
+              this.strongestInvader[
+                `strongestInvader-${strongestInvaderCounter}`
+              ],
+              0
+            );
+          this.strongestInvader[
+            `strongestInvader-${strongestInvaderCounter}`
+          ].id = `strongestInvader-${strongestInvaderCounter}`;
+          this.physics.add.collider(
+            this.bullets,
+            this.strongestInvader[
+              `strongestInvader-${strongestInvaderCounter}`
+            ],
+            this.destroySprites,
+            this.world
           );
         }
       }
@@ -163,10 +187,10 @@ class GameScene extends Phaser.Scene {
       },
     });
   }
+
   destroySprites(invader, bullet) {
     invader.destroy();
     bullet.destroy();
-    console.log(invader.id);
   }
   update(time, delta) {
     let blueLength = Object.keys(this.blueInvader).length;
@@ -186,7 +210,6 @@ class GameScene extends Phaser.Scene {
     if (cursors.space.isDown) {
       this.started = true;
       var bullet = this.bullets.get();
-
       if (bullet) {
         bullet.fire(this.player.x, this.player.y);
         this.lastFired = time + 50;
@@ -217,6 +240,14 @@ class GameScene extends Phaser.Scene {
           delete this.redInvader[invader];
         }
       });
+      Object.keys(this.strongestInvader).forEach((invader) => {
+        if (
+          this.strongestInvader[invader] !== undefined &&
+          this.strongestInvader[invader].active === false
+        ) {
+          delete this.strongestInvader[invader];
+        }
+      });
     }
     if (blueLength < this.lastBlueInvaderLength) {
       this.score += (this.lastBlueInvaderLength - blueLength) * 20;
@@ -229,12 +260,24 @@ class GameScene extends Phaser.Scene {
       this.scoreTable.setText(`Score: ${this.score}`);
     }
     if (redLength < this.lastRedInvaderLength) {
-      this.score += (this.lastRedInvaderLength - redLength) * 60;
+      this.score += (this.lastRedInvaderLength - redLength) * 80;
       this.lastRedInvaderLength = redLength;
       this.scoreTable.setText(`Score: ${this.score}`);
     }
-    if (blueLength === 0) {
-      this.scene.start('CreditsScene');
+    if (strongestLength < this.lastStrongInvaderLength) {
+      this.score += (this.lastStrongInvaderLength - strongestLength) * 160;
+      this.lastStrongInvaderLength = strongestLength;
+      this.scoreTable.setText(`Score: ${this.score}`);
+    }
+    if (blueLength+redLength+yellowLength+strongestLength === 0) {
+      this.level++;
+      this.levelTable.setText(`Level: ${this.level}`);
+      this.lastBlueInvaderLength=30;
+      this.lastyellowInvaderLength=8;
+      this.lastRedInvaderLength=6;
+      this.lastStrongInvaderLength=2;
+
+      setTimeout(this.createAliens(),2000)
     }
   }
 }
