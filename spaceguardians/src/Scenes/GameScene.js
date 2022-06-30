@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-
+import { useState } from 'react';
 class GameScene extends Phaser.Scene {
   constructor() {
     super('gameScene');
@@ -11,7 +11,8 @@ class GameScene extends Phaser.Scene {
     this.yellowInvader = {};
     this.strongestInvader = {};
     this.score = 0;
-    this.blueInvaderLength = 30;
+    this.lastBlueInvaderLength = 30;
+    
   }
   preload() {
     this.load.image('starfield', '../assets/bkg.jpg');
@@ -26,7 +27,7 @@ class GameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, 800, 600);
     this.starfield = this.add.image(0, 0, 'starfield').setScale(3);
     this.player = this.physics.add.image(400, 530, 'player');
-    this.add.text(20, 20, `Score : ${this.score}`);
+    this.scoreTable=this.add.text(20, 20, `Score : ${this.score}`);
     this.player.setCollideWorldBounds(true);
     // creating the bullet
     this.lastFired = null;
@@ -80,12 +81,8 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(
           this.bullets,
           this.blueInvader[`invader-${blueInvaderCounter}`],
-          function (invader, bullet) {
-            invader.destroy();
-            bullet.destroy();
-            invader = null;
-            console.log(invader);
-          }
+          this.destroySprites,
+          this.world
         );
       }
     }
@@ -133,7 +130,10 @@ class GameScene extends Phaser.Scene {
       },
     });
   }
-
+  destroySprites(invader, bullet) {
+    invader.destroy();
+    bullet.destroy();
+  }
   update(time, delta) {
     const cursors = this.input.keyboard.createCursorKeys();
     if (cursors.left.isDown) {
@@ -149,10 +149,18 @@ class GameScene extends Phaser.Scene {
         this.lastFired = time + 50;
       }
     }
-    if (time % 200 === 0) {
-      console.log(typeof this.blueInvader);
+    if (cursors.space.isDown || cursors.left.isDown || cursors.right.isDown){
+     Object.keys(this.blueInvader).forEach(invader=>{
+        if(this.blueInvader[invader] !== undefined && this.blueInvader[invader].active===false){
+        delete this.blueInvader[invader]
+        }
+      })
+      if(Object.keys(this.blueInvader).length<this.lastBlueInvaderLength){
+        this.score+=(this.lastBlueInvaderLength-Object.keys(this.blueInvader).length)*20;
+        this.lastBlueInvaderLength=Object.keys(this.blueInvader).length;
+        this.scoreTable.setText(`Score: ${this.score}`)
+      }
     }
-    
   }
 }
 export default GameScene;
