@@ -18,6 +18,9 @@ const GameComponent =()=>{
           // gravity: { y: 200 }
         }
       },
+      audio: {
+        disableWebAudio: true
+      },
       scene: [TitleScene,GameScene,CreditsScene]
     }
 setTimeout(()=>{if(document.getElementById('game')!==null){
