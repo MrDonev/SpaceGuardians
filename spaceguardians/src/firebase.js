@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, push, child, onValue } from "firebase/database";
-import { getAuth, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
-import { useState } from "react";
+import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfU9SJ5JQ4m47DI_wtZiG-xdFHlZ73rvE",
@@ -19,22 +18,22 @@ export const auth = getAuth(app);
 
 const database = getDatabase(app);
 
-export const anonymousSignIn = () => {
-  signInAnonymously(auth)
-    .then((result) => {
-      const uid = result.user.uid;
+// export const anonymousSignIn = () => {
+//   signInAnonymously(auth)
+//     .then((result) => {
+//       const uid = result.user.uid;
 
-      localStorage.setItem("uid", uid);
+//       localStorage.setItem("uid", uid);
 
-      alert(`Hello Stranger ${uid}`);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-      // ...
-    });
-};
+//       alert(`Hello Stranger ${uid}`);
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       console.log(errorMessage);
+//       // ...
+//     });
+// };
 
 export const writeUserData = (userId, name, email) => {
   const db = getDatabase(app);

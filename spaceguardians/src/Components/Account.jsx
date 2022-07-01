@@ -23,10 +23,9 @@ const firebaseConfig = {
   databaseURL:
     "https://spaceguardians-d5924-default-rtdb.europe-west1.firebasedatabase.app/",
 };
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-const db = getDatabase(app);
 const Account = () => {
   const [individualChat, setIndividualChat] = useState({});
   const { user, logout } = UserAuth();
@@ -48,36 +47,39 @@ const Account = () => {
       console.log(e.message);
     }
   };
+  console.log(user.email);
+  const checkedNew = user.email.split("@"[0]);
 
   function sendMessage(e) {
-    const username = prompt("Please Tell Us Your Name");
-    document
-      .getElementById("message-form")
-      .addEventListener("submit", sendMessage);
+    const username = checkedNew[0];
     e.preventDefault();
-    const timestamp = serverTimestamp();
+
+    // get values to be submitted
+    const timestamp = Date.now();
     const messageInput = document.getElementById("message-input");
     const message = messageInput.value;
+
+    // clear the input box
     messageInput.value = "";
 
     //auto scroll to bottom
-    document
-      .getElementById("messages")
-      .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-    set(ref(db, "messages/" + username), {
+    document.getElementById("messages");
+    // .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+    // create db collection and send in the data
+    set(ref(db, "messages/" + timestamp), {
       username,
       message,
-      timestamp,
     });
   }
 
   const db = getDatabase(app);
   const chatValues = Object.values(individualChat);
-  function sortascending() {}
+
   return (
     <div className="max-w-[600px] mx-auto my-16 p-4">
-      <p> {user && user.email}</p>
-      <ScoreTable />
+      <p> Hello {checkedNew[0]}</p>
+
       <div className="game">{/* <GameComponent /> */}</div>
       <div>
         <div id="chat">

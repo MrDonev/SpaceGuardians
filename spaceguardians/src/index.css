@@ -124,7 +124,9 @@ button:hover {
   align-items: center;
   justify-content: center;
   width: 120%;
+  max-height: 350px;
   text-align: center;
   display: flex;
   flex-direction: column;
+  overflow-x: auto;
 }

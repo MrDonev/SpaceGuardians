@@ -69,7 +69,7 @@ const Signin = () => {
         {/* <button onClick={ logout }>Sign out</button>
         <h1>signed Out</h1> */}
       </form>
-      <SignInAsAGuest />
+
       <h1>{}</h1>
     </div>
   );
