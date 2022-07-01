@@ -1,4 +1,5 @@
-import Phaser from 'phaser';
+import matchers from '@testing-library/jest-dom/matchers';
+import Phaser, { Time } from 'phaser';
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -17,6 +18,10 @@ class GameScene extends Phaser.Scene {
     this.lastStrongInvaderLength = 2;
     this.started = false;
     this.level=1;
+    this.playerLives=3;
+    this.resources = 0;
+    this.timer = 0;
+
   }
   preload() {
     this.load.image('starfield', '../assets/bkg.jpg');
@@ -26,6 +31,7 @@ class GameScene extends Phaser.Scene {
     this.load.image('redBlueInvader', '../assets/redBlueEnemy.png');
     this.load.image('strongestInvader', '../assets/strongestEnemy.png');
     this.load.image('bullet', '../assets/bullet.png');
+    this.load.image('enemyBullet', '../assets/enemyBullet.png');
     this.load.audio('shoot', ['../assets/shoot.wav'])
     this.load.audio('death', ['../assets/death.wav'])
     this.load.audio('tune', ['../assets/music.mp3'])
@@ -35,9 +41,11 @@ class GameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, 800, 600);
     this.starfield = this.add.image(0, 0, 'starfield').setScale(3);
     this.player = this.physics.add.image(400, 530, 'player');
+    this.player.setCollideWorldBounds(true);
     this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
     this.levelTable = this.add.text(710,20,`Level : ${this.level}`)
-    this.player.setCollideWorldBounds(true);
+
+
     // creating the bullet
     this.lastFired = null;
     var Bullet = new Phaser.Class({
@@ -65,11 +73,38 @@ class GameScene extends Phaser.Scene {
       runChildUpdate: true,
     });
 
+    //creating the enemy bullet
+    this.lastFired1 = null;
+    var enemyBullet = new Phaser.Class({
+      Extends: Phaser.GameObjects.Image,
+      initialize: function enemyBullet(scene) {
+        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemyBullet');
+        this.speed = Phaser.Math.GetSpeed(200, 1);
+      },
+      fire: function (x, y) {
+        this.setPosition(x, y);
+        this.setActive(true);
+        this.setVisible(true);
+      },
+      update: function (time, delta) {
+        this.y += this.speed * delta;
+        if (this.y < -50) {
+          this.setActive(false);
+          this.setVisible(false);
+        }
+      },
+    });
+    this.enemyBullets = this.physics.add.group({
+      classType: enemyBullet,
+      maxSize: -1,
+      runChildUpdate: true,
+    });
+
 
     //adding the sounds
     this.fire = this.sound.add('shoot', {loop: false});
     this.death = this.sound.add('death', {loop: false});
-    this.music = this.sound.add('tune', 0.7, {loop: true});
+    this.music = this.sound.add('tune', {loop: true, volume: 0.5 });
     this.levelEnd = this.sound.add('levelEnd', {loop: false});
 
     //creating the aliens
@@ -204,6 +239,39 @@ class GameScene extends Phaser.Scene {
     });
   }
 
+  enemyFire() {
+    
+      let length= 30;
+      let random = Math.floor(Math.random() * length) + 1
+    if(this.blueInvader[`blueInvader-${random}`] === undefined){
+      this.enemyFire()
+    } else {
+      //shoot the bloody bullet!
+      var bullet = this.enemyBullets.get();
+      if (bullet) {
+        bullet.fire(this.blueInvader[`blueInvader-${random}`].x, this.blueInvader[`blueInvader-${random}`].y);
+        //this.lastFired = time + 50;
+      }
+    };
+
+
+    }
+
+
+
+      // var bullet = this.enemyBullets.get();
+      // if (bullet){
+      //   bullet.fire(this.aliens.x, this.aliens.y);
+      //   //this.physics.add.collider(player, bullet, playHitCallback);
+      // }
+      // var bullet = this.bullets.get();
+      // if (bullet) {
+      //   bullet.fire(this.player.x, this.player.y);
+      //   this.shootWeapon();
+      //   this.lastFired = time + 50;
+      // }
+  
+
   destroySprites(invader, bullet) {
     invader.destroy();
     bullet.destroy();
@@ -237,13 +305,24 @@ class GameScene extends Phaser.Scene {
     }
     if (cursors.space.isDown) {
       this.started = true;
-      var bullet = this.bullets.get();
+      var bullet = this.bullets.get();   
       if (bullet) {
         bullet.fire(this.player.x, this.player.y);
         this.shootWeapon();
         this.lastFired = time + 50;
       }
     }
+    this.timer += delta;
+    while (this.timer > 2000) {
+        this.resources += 2;
+        this.timer -= 2000;
+        this.enemyFire();
+    }
+
+
+
+
+
     if (this.started) {
       Object.keys(this.blueInvader).forEach((invader) => {
         if (
