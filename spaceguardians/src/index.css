@@ -104,3 +104,27 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+
+.list {
+  list-style-type: none;
+  margin-bottom: 10px;
+  background-color: #6929ca;
+  padding: 5px;
+  border-radius: 10px;
+  color: white;
+  width: 80%;
+  text-align: center;
+}
+
+.frame {
+  background-color: beige;
+  padding: 5px;
+  border-radius: 10px;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 120%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}

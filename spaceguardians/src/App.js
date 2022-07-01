@@ -14,9 +14,6 @@ import ProtectedRoute from "./Components/ProtectedRoute.js";
 function App() {
   return (
     <div className="App">
-      <div>
-        <Header />
-      </div>
       <AuthContextProvider>
         <Routes>
           <Route path="/" element={<Signin />} />

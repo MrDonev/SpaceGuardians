@@ -1,11 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, onValue } from "firebase/database";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInAnonymously,
-} from "firebase/auth";
+import { getDatabase, ref, set, push, child, onValue } from "firebase/database";
+import { getAuth, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
 import { useState } from "react";
 
 const firebaseConfig = {
@@ -21,9 +16,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export default app;
 
-const provider = new GoogleAuthProvider();
+const database = getDatabase(app);
 
 export const anonymousSignIn = () => {
   signInAnonymously(auth)
@@ -67,4 +61,3 @@ export const readUserData = (userId) => {
     return data;
   });
 };
-console.log(readUserData("andy"));
