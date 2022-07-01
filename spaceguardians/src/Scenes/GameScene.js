@@ -1,5 +1,4 @@
-import matchers from '@testing-library/jest-dom/matchers';
-import Phaser, { Time } from 'phaser';
+import Phaser from 'phaser';
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -17,11 +16,10 @@ class GameScene extends Phaser.Scene {
     this.lastRedInvaderLength = 6;
     this.lastStrongInvaderLength = 2;
     this.started = false;
-    this.level=1;
-    this.playerLives=3;
+    this.level = 1;
+    this.playerLives = 3;
     this.resources = 0;
     this.timer = 0;
-
   }
   preload() {
     this.load.image('starfield', '../assets/bkg.jpg');
@@ -32,10 +30,11 @@ class GameScene extends Phaser.Scene {
     this.load.image('strongestInvader', '../assets/strongestEnemy.png');
     this.load.image('bullet', '../assets/bullet.png');
     this.load.image('enemyBullet', '../assets/enemyBullet.png');
-    this.load.audio('shoot', ['../assets/shoot.wav'])
-    this.load.audio('death', ['../assets/death.wav'])
-    this.load.audio('tune', ['../assets/music.mp3'])
-    this.load.audio('levelEnd', ['../assets/level.wav'])
+    this.load.audio('shoot', ['../assets/shoot.wav']);
+    this.load.audio('death', ['../assets/death.wav']);
+    this.load.audio('tune', ['../assets/music.mp3']);
+    this.load.audio('levelEnd', ['../assets/level.wav']);
+    this.load.audio('enemyBulletSound', ['../assets/enemyBulletSound.wav']);
   }
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
@@ -43,8 +42,7 @@ class GameScene extends Phaser.Scene {
     this.player = this.physics.add.image(400, 530, 'player');
     this.player.setCollideWorldBounds(true);
     this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
-    this.levelTable = this.add.text(710,20,`Level : ${this.level}`)
-
+    this.levelTable = this.add.text(710, 20, `Level : ${this.level}`);
 
     // creating the bullet
     this.lastFired = null;
@@ -100,12 +98,12 @@ class GameScene extends Phaser.Scene {
       runChildUpdate: true,
     });
 
-
     //adding the sounds
-    this.fire = this.sound.add('shoot', {loop: false});
-    this.death = this.sound.add('death', {loop: false});
-    this.music = this.sound.add('tune', {loop: true, volume: 0.5 });
-    this.levelEnd = this.sound.add('levelEnd', {loop: false});
+    this.fire = this.sound.add('shoot', { loop: false });
+    this.death = this.sound.add('death', { loop: false });
+    this.enemyBulletSound = this.sound.add('enemyBulletSound', { loop: false });
+    this.music = this.sound.add('tune', { loop: true, volume: 0.7 });
+    this.levelEnd = this.sound.add('levelEnd', { loop: false });
 
     //creating the aliens
     this.aliens = this.add.group();
@@ -114,8 +112,6 @@ class GameScene extends Phaser.Scene {
 
     //play the music
     this.music.play();
-    
-    
   }
 
   createAliens() {
@@ -193,11 +189,8 @@ class GameScene extends Phaser.Scene {
       for (let x = 7; x <= 10; x++) {
         if (x === 7 || x === 10) {
           ++strongestInvaderCounter;
-          this.strongestInvader[`strongestInvader-${strongestInvaderCounter}`] = this.aliens.create(
-            x * 48,
-            y * 35,
-            'strongestInvader'
-          );
+          this.strongestInvader[`strongestInvader-${strongestInvaderCounter}`] =
+            this.aliens.create(x * 48, y * 35, 'strongestInvader');
           this.strongestInvader[`strongestInvader-${strongestInvaderCounter}`] =
             this.physics.add.existing(
               this.strongestInvader[
@@ -240,37 +233,26 @@ class GameScene extends Phaser.Scene {
   }
 
   enemyFire() {
-    
-      let length= 30;
-      let random = Math.floor(Math.random() * length) + 1
-    if(this.blueInvader[`blueInvader-${random}`] === undefined){
-      this.enemyFire()
+    let length = 30;
+    let random = Math.floor(Math.random() * length) + 1;
+    let var1 = true;
+      if (this.blueInvader[`blueInvader-${random}`] === undefined && var1) {
+      if (!Object.keys(this.blueInvader).length) {var1= false}
+      else{
+        this.enemyFire();
+      };
     } else {
-      //shoot the bloody bullet!
       var bullet = this.enemyBullets.get();
       if (bullet) {
-        bullet.fire(this.blueInvader[`blueInvader-${random}`].x, this.blueInvader[`blueInvader-${random}`].y);
-        //this.lastFired = time + 50;
+        bullet.fire(
+          this.blueInvader[`blueInvader-${random}`].x,
+          this.blueInvader[`blueInvader-${random}`].y
+        );
+        this.enemyBulletSound.play();
+        //console.log(this.blueInvader[`blueInvader-${random}`].id);
       }
-    };
-
-
     }
-
-
-
-      // var bullet = this.enemyBullets.get();
-      // if (bullet){
-      //   bullet.fire(this.aliens.x, this.aliens.y);
-      //   //this.physics.add.collider(player, bullet, playHitCallback);
-      // }
-      // var bullet = this.bullets.get();
-      // if (bullet) {
-      //   bullet.fire(this.player.x, this.player.y);
-      //   this.shootWeapon();
-      //   this.lastFired = time + 50;
-      // }
-  
+  }
 
   destroySprites(invader, bullet) {
     invader.destroy();
@@ -305,23 +287,20 @@ class GameScene extends Phaser.Scene {
     }
     if (cursors.space.isDown) {
       this.started = true;
-      var bullet = this.bullets.get();   
+      var bullet = this.bullets.get();
       if (bullet) {
         bullet.fire(this.player.x, this.player.y);
         this.shootWeapon();
         this.lastFired = time + 50;
       }
     }
+
     this.timer += delta;
     while (this.timer > 2000) {
-        this.resources += 2;
-        this.timer -= 2000;
-        this.enemyFire();
+      this.resources += 2;
+      this.timer -= 2000;
+      this.enemyFire();
     }
-
-
-
-
 
     if (this.started) {
       Object.keys(this.blueInvader).forEach((invader) => {
@@ -330,7 +309,7 @@ class GameScene extends Phaser.Scene {
           this.blueInvader[invader].active === false
         ) {
           delete this.blueInvader[invader];
-          this.dieAlien()
+          this.dieAlien();
         }
       });
       Object.keys(this.yellowInvader).forEach((invader) => {
@@ -339,8 +318,7 @@ class GameScene extends Phaser.Scene {
           this.yellowInvader[invader].active === false
         ) {
           delete this.yellowInvader[invader];
-          this.dieAlien()
-
+          this.dieAlien();
         }
       });
       Object.keys(this.redInvader).forEach((invader) => {
@@ -349,7 +327,7 @@ class GameScene extends Phaser.Scene {
           this.redInvader[invader].active === false
         ) {
           delete this.redInvader[invader];
-          this.dieAlien()
+          this.dieAlien();
         }
       });
       Object.keys(this.strongestInvader).forEach((invader) => {
@@ -358,7 +336,7 @@ class GameScene extends Phaser.Scene {
           this.strongestInvader[invader].active === false
         ) {
           delete this.strongestInvader[invader];
-          this.dieAlien()
+          this.dieAlien();
         }
       });
     }
@@ -382,15 +360,15 @@ class GameScene extends Phaser.Scene {
       this.lastStrongInvaderLength = strongestLength;
       this.scoreTable.setText(`Score: ${this.score}`);
     }
-    if (blueLength+redLength+yellowLength+strongestLength === 0) {
+    if (blueLength + redLength + yellowLength + strongestLength === 0) {
       this.level++;
       this.levelTable.setText(`Level: ${this.level}`);
-      this.lastBlueInvaderLength=30;
-      this.lastyellowInvaderLength=8;
-      this.lastRedInvaderLength=6;
-      this.lastStrongInvaderLength=2;
+      this.lastBlueInvaderLength = 30;
+      this.lastyellowInvaderLength = 8;
+      this.lastRedInvaderLength = 6;
+      this.lastStrongInvaderLength = 2;
       this.levelEnding();
-      setTimeout(this.createAliens(),2000)
+      setTimeout(this.createAliens(), 2000);
     }
   }
 }
