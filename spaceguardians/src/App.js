@@ -1,7 +1,4 @@
-import GameComponent from "./Game.js";
 import "./App.css";
-import Header from "./Components/Header.jsx";
-import UserProfile from "./Components/UserProfile.jsx";
 
 import React from "react";
 import Signin from "./Components/SignIn.jsx";
@@ -18,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/account" element={<GameComponent />} /> */}
+
           <Route
             path="/account"
             element={
@@ -29,12 +26,6 @@ function App() {
           />
         </Routes>
       </AuthContextProvider>
-      {/* <main id="main"> */}
-      {/* <div id="game"> */}
-      {/* <GameComponent /> */}
-      {/* </div> */}
-      {/* <UserProfile /> */}
-      {/* </main> */}
     </div>
   );
 }

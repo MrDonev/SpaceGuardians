@@ -1,28 +1,12 @@
 import React from "react";
-import ScoreTable from "./ScoreTable";
+
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/authContext";
 import { initializeApp } from "firebase/app";
-import {
-  getDatabase,
-  ref,
-  set,
-  onValue,
-  serverTimestamp,
-} from "firebase/database";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from "react";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAfU9SJ5JQ4m47DI_wtZiG-xdFHlZ73rvE",
-  authDomain: "spaceguardians-d5924.firebaseapp.com",
-  projectId: "spaceguardians-d5924",
-  storageBucket: "spaceguardians-d5924.appspot.com",
-  messagingSenderId: "27183731871",
-  appId: "1:27183731871:web:655c6b31483b83d9f37eaa",
-  databaseURL:
-    "https://spaceguardians-d5924-default-rtdb.europe-west1.firebasedatabase.app/",
-};
+import { firebaseConfig } from "../firebase";
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -47,26 +31,17 @@ const Account = () => {
       console.log(e.message);
     }
   };
-  console.log(user.email);
+
   const checkedNew = user.email.split("@"[0]);
 
   function sendMessage(e) {
     const username = checkedNew[0];
     e.preventDefault();
-
-    // get values to be submitted
     const timestamp = Date.now();
     const messageInput = document.getElementById("message-input");
     const message = messageInput.value;
-
-    // clear the input box
     messageInput.value = "";
-
-    //auto scroll to bottom
     document.getElementById("messages");
-    // .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-
-    // create db collection and send in the data
     set(ref(db, "messages/" + timestamp), {
       username,
       message,
@@ -79,8 +54,6 @@ const Account = () => {
   return (
     <div className="max-w-[600px] mx-auto my-16 p-4">
       <p> Hello {checkedNew[0]}</p>
-
-      <div className="game">{/* <GameComponent /> */}</div>
       <div>
         <div id="chat">
           <ul className="frame" id="messages">

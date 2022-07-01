@@ -3,14 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/authContext";
 import "../index.css";
 import { SignInWithGoogle } from "./SigninWithGoogle";
-import { SignInAsAGuest } from "./SignInAsAGuest";
-
-import {
-  signInWithGoogle,
-  logout,
-  anonymousSignIn,
-  writeUserData,
-} from "../firebase";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -65,12 +57,7 @@ const Signin = () => {
         <button className="button">Sign In</button>
 
         <SignInWithGoogle />
-
-        {/* <button onClick={ logout }>Sign out</button>
-        <h1>signed Out</h1> */}
       </form>
-
-      <h1>{}</h1>
     </div>
   );
 };

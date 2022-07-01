@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyAfU9SJ5JQ4m47DI_wtZiG-xdFHlZ73rvE",
   authDomain: "spaceguardians-d5924.firebaseapp.com",
   projectId: "spaceguardians-d5924",
@@ -12,11 +12,9 @@ const firebaseConfig = {
   databaseURL:
     "https://spaceguardians-d5924-default-rtdb.europe-west1.firebasedatabase.app/",
 };
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
-const database = getDatabase(app);
 
 // export const anonymousSignIn = () => {
 //   signInAnonymously(auth)
@@ -43,12 +41,6 @@ export const writeUserData = (userId, name, email) => {
     highScore: 0,
   });
 };
-
-// reading the user data from the Firebase Realtime db
-function callUser(data) {
-  console.log(data);
-  return data;
-}
 
 export const readUserData = (userId) => {
   const db = getDatabase(app);
