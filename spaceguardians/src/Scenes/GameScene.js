@@ -29,7 +29,7 @@ class GameScene extends Phaser.Scene {
     this.load.audio('shoot', ['../assets/shoot.wav'])
     this.load.audio('death', ['../assets/death.wav'])
     this.load.audio('tune', ['../assets/music.mp3'])
-    this.load.audio('level', ['../assets/level.wav'])
+    this.load.audio('levelEnd', ['../assets/level.wav'])
   }
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
@@ -69,8 +69,8 @@ class GameScene extends Phaser.Scene {
     //adding the sounds
     this.fire = this.sound.add('shoot', {loop: false});
     this.death = this.sound.add('death', {loop: false});
-    this.music = this.sound.add('tune', {loop: true});
-    this.level = this.sound.add('level', {loop: false});
+    this.music = this.sound.add('tune', 0.7, {loop: true});
+    this.levelEnd = this.sound.add('levelEnd', {loop: false});
 
     //creating the aliens
     this.aliens = this.add.group();
@@ -217,8 +217,8 @@ class GameScene extends Phaser.Scene {
     this.death.play();
   }
 
-  levelEnd() {
-    this.level.play();
+  levelEnding() {
+    this.levelEnd.play();
   }
   update(time, delta) {
     let blueLength = Object.keys(this.blueInvader).length;
@@ -310,7 +310,7 @@ class GameScene extends Phaser.Scene {
       this.lastyellowInvaderLength=8;
       this.lastRedInvaderLength=6;
       this.lastStrongInvaderLength=2;
-      this.levelEnd();
+      this.levelEnding();
       setTimeout(this.createAliens(),2000)
     }
   }
