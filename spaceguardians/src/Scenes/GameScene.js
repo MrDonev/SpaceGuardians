@@ -212,10 +212,11 @@ class GameScene extends Phaser.Scene {
         }
       }
     }
+
+    //enemy animation tween
+
     this.container.add(this.aliens.children.entries);
-
     var destX = -10;
-
     var tween = this.tweens.add({
       targets: this.container,
       duration: 6000,
@@ -232,27 +233,94 @@ class GameScene extends Phaser.Scene {
     });
   }
 
-  enemyFire() {
+  
+
+  //enemy bullet fire
+  blueEnemyFire() {
     let length = 30;
     let random = Math.floor(Math.random() * length) + 1;
     let var1 = true;
       if (this.blueInvader[`blueInvader-${random}`] === undefined && var1) {
       if (!Object.keys(this.blueInvader).length) {var1= false}
       else{
-        this.enemyFire();
+        this.blueEnemyFire();
       };
     } else {
-      var bullet = this.enemyBullets.get();
+      var bullet = this.enemyBullets.get();  
       if (bullet) {
         bullet.fire(
-          this.blueInvader[`blueInvader-${random}`].x,
-          this.blueInvader[`blueInvader-${random}`].y
-        );
+          this.blueInvader[`blueInvader-${random}`].parentContainer.x + this.blueInvader[`blueInvader-${random}`].x, 
+          this.blueInvader[`blueInvader-${random}`].y,
+          1
+        ); 
         this.enemyBulletSound.play();
-        //console.log(this.blueInvader[`blueInvader-${random}`].id);
-      }
-    }
+        }
+    };
   }
+    yellowEnemyFire() {
+      let length = 8;
+      let random = Math.floor(Math.random() * length) + 1;
+      let var1 = true;
+        if (this.yellowInvader[`yellowInvader-${random}`] === undefined && var1) {
+        if (!Object.keys(this.yellowInvader).length) {var1= false}
+        else{
+          this.yellowEnemyFire();
+        };
+      } else {
+        var bullet = this.enemyBullets.get();  
+        if (bullet) {
+          bullet.fire(
+            this.yellowInvader[`yellowInvader-${random}`].parentContainer.x + this.yellowInvader[`yellowInvader-${random}`].x, 
+            this.yellowInvader[`yellowInvader-${random}`].y,
+            1
+          ); 
+          this.enemyBulletSound.play();
+          }
+      }
+  }
+
+  redEnemyFire() {
+    let length = 6;
+    let random = Math.floor(Math.random() * length) + 1;
+    let var1 = true;
+      if (this.redInvader[`redInvader-${random}`] === undefined && var1) {
+      if (!Object.keys(this.redInvader).length) {var1= false}
+      else{
+        this.redEnemyFire();
+      };
+    } else {
+      var bullet = this.enemyBullets.get();  
+      if (bullet) {
+        bullet.fire(
+          this.redInvader[`redInvader-${random}`].parentContainer.x + this.redInvader[`redInvader-${random}`].x, 
+          this.redInvader[`redInvader-${random}`].y,
+          1
+        ); 
+        this.enemyBulletSound.play();
+        }
+    }
+}  
+strongestEnemyFire() {
+  let length = 6;
+  let random = Math.floor(Math.random() * length) + 1;
+  let var1 = true;
+    if (this.strongestInvader[`strongestInvader-${random}`] === undefined && var1) {
+    if (!Object.keys(this.strongestInvader).length) {var1= false}
+    else{
+      this.strongestEnemyFire();
+    };
+  } else {
+    var bullet = this.enemyBullets.get();  
+    if (bullet) {
+      bullet.fire(
+        this.strongestInvader[`strongestInvader-${random}`].parentContainer.x + this.strongestInvader[`strongestInvader-${random}`].x, 
+        this.strongestInvader[`strongestInvader-${random}`].y,
+        1
+      ); 
+      this.enemyBulletSound.play();
+      }
+  }
+}
 
   destroySprites(invader, bullet) {
     invader.destroy();
@@ -276,6 +344,8 @@ class GameScene extends Phaser.Scene {
     let redLength = Object.keys(this.redInvader).length;
     let strongestLength = Object.keys(this.strongestInvader).length;
 
+
+
     const cursors = this.input.keyboard.createCursorKeys();
     if (cursors.left.isDown) {
       this.player.x -= 3;
@@ -295,13 +365,19 @@ class GameScene extends Phaser.Scene {
       }
     }
 
-    this.timer += delta;
-    while (this.timer > 2000) {
-      this.resources += 2;
-      this.timer -= 2000;
-      this.enemyFire();
-    }
+      let random = Phaser.Math.FloatBetween(0.1, 6)/this.level;
+      this.timer += (delta * random) / this.level;
+      while (this.timer > 2000/this.level) {
+        this.resources += 2;
+        this.timer -= 2000; 
+      if(random > 2.5) this.blueEnemyFire();
+      if(random < 2) this.yellowEnemyFire();
+      if(random < 1) this.redEnemyFire();  
+      if(random < 0.5) this.strongestEnemyFire();
+      console.log(random)
+      }
 
+   
     if (this.started) {
       Object.keys(this.blueInvader).forEach((invader) => {
         if (
