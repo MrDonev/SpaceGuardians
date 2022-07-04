@@ -32,8 +32,7 @@ const Account = () => {
     }
   };
 
-  const checkedNew = user.email.split("@"[0]);
-
+  const checkedNew = user.email !== undefined ? user.email.split("@"[0]) : "";
   function sendMessage(e) {
     const username = checkedNew[0];
     e.preventDefault();
