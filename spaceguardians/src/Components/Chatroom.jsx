@@ -12,12 +12,17 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const Account = () => {
   const [individualChat, setIndividualChat] = useState({});
+  const [isDisabled,setIsDisabled]=useState(true)
   const { user, logout } = UserAuth();
   useEffect(() => {
     onValue(ref(db, "messages"), (snapshot) => {
       const userData = snapshot.val();
       setIndividualChat(userData);
     });
+    if(typeof user === 'object' && user != null && Object.keys(user).length !== 0){
+      setIsDisabled(false);
+      console.log(isDisabled)
+    }
   }, []);
 
   const navigate = useNavigate();
@@ -26,13 +31,13 @@ const Account = () => {
     try {
       await logout();
       navigate("/");
-      console.log("You are logged out");
+      setIsDisabled(true)
     } catch (e) {
       console.log(e.message);
     }
   };
 
-  const checkedNew = user.email !== undefined ? user.email.split("@"[0]) : "";
+  const checkedNew = (typeof user === 'object' && user != null && Object.keys(user).length !== 0)? user.email.split("@"[0]) : "";
   function sendMessage(e) {
     const username = checkedNew[0];
     e.preventDefault();
@@ -44,15 +49,13 @@ const Account = () => {
     set(ref(db, "messages/" + timestamp), {
       username,
       message,
+      timestamp,
     });
   }
-
   const db = getDatabase(app);
   const chatValues = Object.values(individualChat);
-
   return (
-    <div className="max-w-[600px] mx-auto my-16 p-4">
-      <p> Hello {checkedNew[0]}</p>
+    <div id="chatContainer">
       <div>
         <div id="chat">
           <ul className="frame" id="messages">
@@ -61,24 +64,24 @@ const Account = () => {
               .map((key, index) => {
                 return (
                   <li className="list" key={index}>
-                    {chatValues[index].username}: {chatValues[index].message}
+                  @{chatValues[index]['timestamp']?new Date((chatValues[index]['timestamp'])).toLocaleTimeString():null}  | {chatValues[index].username}: {chatValues[index].message}
                   </li>
                 );
               })}
           </ul>
 
           <form id="message-form">
-            <input placeholder="Enter message" id="message-input" type="text" />
+            <input disabled={isDisabled} placeholder="Enter message" id="message-input" type="text" />
             <button onClick={sendMessage} id="message-btn" type="submit">
               Send
             </button>
           </form>
         </div>
       </div>
-
+{/* 
       <button onClick={handleLogout} className="border px-6 py-2 my-4">
         Logout
-      </button>
+      </button> */}
     </div>
   );
 };

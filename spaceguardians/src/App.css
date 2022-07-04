@@ -1,34 +1,138 @@
-html,body{
-  margin:0;
+html,
+body {
+  margin: 0;
   padding: 0;
+  background-color: #202029;
 }
-header{
-  margin-bottom:0.2em;
-  height: 20vh;
+header {
+  display: grid;
+  background-color: #202029;
+  margin-bottom: 0.2em;
+  height: 30%;
   width: 100%;
-  border: 1px solid red;
-}
-#main{
-  display:grid;
-  grid-template-columns: 3fr 2fr;
+  color: rgb(26, 150, 15);
+  font-size: larger;
+  grid-template-columns: 3fr 1fr;
   grid-template-areas:
-   'game game profile'
-   'game game profile'
-   'game game profile';
+    'h1  user'
+    'nav nav';
 }
-#game{
-  margin-right:0.2em;
-  border:1px solid red;
+#userLog {
+  grid-area: user;
+  margin-right: 1em;
+  text-align: right;
+}
+header h1 {
+  display: flex;
+  margin: auto;
+  grid-area: h1;
+}
+header button, .signing button {
+  border-radius: 0.8em;
+  border: 1px transparent;
+  margin: 0.2em;
+  font-size: large;
+  padding: 0.5em;
+  background-color: rgb(18, 95, 37);
+  color: beige;
+}
+header button:hover, .signing button:hover {
+  background-color: rgb(21, 141, 10);
+}
+#nav button{
+  text-align: center;
+  width:9em;
+}
+#error {
+  text-align: center;
+  margin-top: 3em;
+}
+#userPhoto {
+  border-radius: 1.5em;
+}
+#nav {
+  height: 2.5em;
+  margin-top: auto;
+  float: center;
+  grid-area: nav;
+  margin-right: 11em;
+  margin-bottom: 0.5em;
+}
+#nav button {
+  float: right;
+}
+#chatContainer {
+  width: 56vw;
+  max-height: 100%;
+}
+#chat {
+  margin-top: 0.5em;
+  height: 33.1em;
+  overflow-y: scroll;
+  background-color: #202029;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
+  color: rgb(28, 163, 16);
+}
+#message-input {
+  white-space: pre-line;
+  width: 80%;
+  height: 2.5em;
+}
+#message-btn {
+  padding: 0.7em;
+  width: 5vw;
+}
+#loggedUser {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 1.5em;
+}
+.signing{
+  margin: 0.5em;
+  height: 37.5em;
+  text-align: center;
+  color: rgb(26, 150, 15);
+  background-color: #202029;
+}
+#signUpForm input{
+width: 13em;
+height: 2em;
+border-radius: 0.2em;
+margin: 0.1em;
+}
+.list {
+  list-style: none;
+  margin: 0.1em;
+}
+#about{
+  text-align: center;
+  color: rgb(26, 150, 15);
+  background-color: #202029;
+  margin: 0.5em;
+  height: 37.5em;
+}
+#main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  background-color: rgb(192, 192, 192);
+  grid-template-areas:
+    'game  right-section'
+    'game  right-section'
+    'game  right-section';
+}
+#game {
+  margin-right: 0.2em;
   width: 820px;
   height: 620px;
   grid-area: game;
 }
-#game canvas{
-  margin:0.5em;
+#game canvas {
+  margin: 0.5em;
 }
-#userPofile{
+#rightSection {
   border: 1px solid red;
   text-align: center;
-  grid-area: profile;
-  width: 30vw;
+  grid-area: right-section;
 }

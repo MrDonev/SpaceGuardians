@@ -9,7 +9,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const { user,signIn } = UserAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -27,27 +27,29 @@ const Signin = () => {
   };
 
   return (
-    <div className="body">
-      <div>
-        <h1 className="text-2xl font-bold py-2">Sign in to your account</h1>
-        <p className="py-2">
-          Don't have an account yet?{" "}
+    <div className="signing">
+     {user===null?
+     <>
+     <div>
+        <h1>Sign in to your account</h1>
+        <p>
+          Don't have an account yet?
           <Link to="/signup" className="underline">
-            Sign up.
+            <button>Sign up here</button>
           </Link>
         </p>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Email Address</label>
+      <form id="signUpForm" onSubmit={handleSubmit}>
+        <div >
+          <label id='signUpEmail'>Email Address</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
             className="input"
             type="email"
           />
         </div>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Password</label>
+        <div>
+          <label id='signUpPass'>Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
             className="input"
@@ -58,7 +60,8 @@ const Signin = () => {
 
         <SignInWithGoogle />
       </form>
-    </div>
+     </> : null}
+     </div>
   );
 };
 export default Signin;
