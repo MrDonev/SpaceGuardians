@@ -9,7 +9,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const { user,signIn } = UserAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -28,12 +28,14 @@ const Signin = () => {
 
   return (
     <div className="body">
-      <div>
+     {user.displayName===undefined?
+     <>
+     <div>
         <h1 className="text-2xl font-bold py-2">Sign in to your account</h1>
         <p className="py-2">
-          Don't have an account yet?{" "}
+          Don't have an account yet?
           <Link to="/signup" className="underline">
-            Sign up.
+            <button>Sign up here</button>
           </Link>
         </p>
       </div>
@@ -58,7 +60,8 @@ const Signin = () => {
 
         <SignInWithGoogle />
       </form>
-    </div>
+     </> : null}
+     </div>
   );
 };
 export default Signin;

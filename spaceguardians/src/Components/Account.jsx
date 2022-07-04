@@ -51,8 +51,7 @@ const Account = () => {
   const chatValues = Object.values(individualChat);
 
   return (
-    <div className="max-w-[600px] mx-auto my-16 p-4">
-      <p> Hello {checkedNew[0]}</p>
+    <div id="chatContainer">
       <div>
         <div id="chat">
           <ul className="frame" id="messages">
@@ -62,6 +61,7 @@ const Account = () => {
                 return (
                   <li className="list" key={index}>
                     {chatValues[index].username}: {chatValues[index].message}
+                    {console.log(chatValues[index])}
                   </li>
                 );
               })}
@@ -75,10 +75,10 @@ const Account = () => {
           </form>
         </div>
       </div>
-
+{/* 
       <button onClick={handleLogout} className="border px-6 py-2 my-4">
         Logout
-      </button>
+      </button> */}
     </div>
   );
 };
