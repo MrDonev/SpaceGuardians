@@ -47,16 +47,7 @@ class GameScene extends Phaser.Scene {
     this.levelTable = this.add.text(710, 20, `Level : ${this.level}`);
     this.livesDisplayer = this.add.text(710, 580, `Lives : ${this.playerLives}`);
 
-    //creating the player
-    this.player = this.physics.add.image(400, 530, 'player');
-    this.player.setCollideWorldBounds(true);
-    this.physics.add.collider(
-      this.player,
-      this.enemyBullets,
-      this.destroyPlayer,
-      this.world
-    );
-
+    
     // creating the bullet
     this.lastFired = null;
     var Bullet = new Phaser.Class({
@@ -118,15 +109,33 @@ class GameScene extends Phaser.Scene {
     this.music = this.sound.add('tune', { loop: true, volume: 0.7 });
     this.levelEnd = this.sound.add('levelEnd', { loop: false });
 
+    //creating the player
+
+
     //creating the aliens
     this.aliens = this.add.group();
     this.container = this.add.container(0, 0);
     this.createAliens();
+    this.createPLayer();
 
     //play the music
     this.music.play();
   }
+  
+  createPLayer() {  this.player = this.physics.add.image(400, 530, 'player');
+  this.player.setCollideWorldBounds(true);
+  this.player = this.physics.add.existing(
+          this.player,
+          0
+  );
+  this.physics.add.collider(
+    this.player,
+    this.enemyBullets,
+    this.destroyPlayer,
+    this.world,
 
+  );
+  }
   createAliens() {
     let blueInvaderCounter = 0;
     let yellowInvaderCounter = 0;
@@ -337,15 +346,15 @@ strongestEnemyFire() {
   
 }
 
-destroyPlayer(player, bullet){ 
-  console.log("hit"),
+destroyPlayer(player, bullet) { 
+  console.log(player, bullet,"hit");
 
-  player.destroy(),
-  bullet.destroy(),
-  this.playerLives -=1;
-}
+  player.destroy();
+  bullet.destroy();
+  }
 
  
+
   destroySprites(invader, bullet) {
     invader.destroy();
     bullet.destroy();
@@ -387,6 +396,11 @@ destroyPlayer(player, bullet){
         this.shootWeapon();
         this.lastFired = time + 50;
       }
+    }
+
+    if (this.player.active === false){
+      this.playerLives-=1;
+      this.createPLayer()
     }
 
       let random = Phaser.Math.FloatBetween(0.1, 6)/this.level;
