@@ -43,10 +43,19 @@ class GameScene extends Phaser.Scene {
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     this.starfield = this.add.image(0, 0, 'starfield').setScale(3);
-    this.player = this.physics.add.image(400, 530, 'player');
-    this.player.setCollideWorldBounds(true);
     this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
     this.levelTable = this.add.text(710, 20, `Level : ${this.level}`);
+    this.livesDisplayer = this.add.text(710, 580, `Lives : ${this.playerLives}`);
+
+    //creating the player
+    this.player = this.physics.add.image(400, 530, 'player');
+    this.player.setCollideWorldBounds(true);
+    this.physics.add.collider(
+      this.player,
+      this.enemyBullets,
+      this.destroyPlayer,
+      this.world
+    );
 
     // creating the bullet
     this.lastFired = null;
@@ -324,8 +333,19 @@ strongestEnemyFire() {
       this.enemyBulletSound.play();
       }
   }
+
+  
 }
 
+destroyPlayer(player, bullet){ 
+  console.log("hit"),
+
+  player.destroy(),
+  bullet.destroy(),
+  this.playerLives -=1;
+}
+
+ 
   destroySprites(invader, bullet) {
     invader.destroy();
     bullet.destroy();
@@ -378,7 +398,6 @@ strongestEnemyFire() {
       if(random < 2) this.yellowEnemyFire();
       if(random < 1) this.redEnemyFire();  
       if(random < 0.5) this.strongestEnemyFire();
-      console.log(random)
       }
 
    
