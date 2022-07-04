@@ -20,9 +20,9 @@ const Signup = () => {
         return data;
       })
       .then((data) => {
-        const p = data.replaceAll(".", "_");
+        const p = data.split("@"[0]);
 
-        writeUserData(p, data, data, 0);
+        writeUserData(p[0], p[0], data, 0);
         navigate("/account");
       })
       .catch((e) => {
