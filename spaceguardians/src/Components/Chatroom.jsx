@@ -21,6 +21,7 @@ const Account = () => {
     });
     if(typeof user === 'object' && user != null && Object.keys(user).length !== 0){
       setIsDisabled(false);
+      console.log(isDisabled)
     }
   }, []);
 
@@ -48,11 +49,11 @@ const Account = () => {
     set(ref(db, "messages/" + timestamp), {
       username,
       message,
+      timestamp,
     });
   }
   const db = getDatabase(app);
   const chatValues = Object.values(individualChat);
-
   return (
     <div id="chatContainer">
       <div>
@@ -63,7 +64,7 @@ const Account = () => {
               .map((key, index) => {
                 return (
                   <li className="list" key={index}>
-                    {chatValues[index].username}: {chatValues[index].message}
+                  @{chatValues[index]['timestamp']?new Date((chatValues[index]['timestamp'])).toLocaleTimeString():null}  | {chatValues[index].username}: {chatValues[index].message}
                   </li>
                 );
               })}
