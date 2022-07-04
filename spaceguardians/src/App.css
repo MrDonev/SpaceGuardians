@@ -50,6 +50,9 @@ header button:hover, .signing button:hover {
 #userPhoto {
   border-radius: 1.5em;
 }
+#game canvas{
+  cursor: none;
+}
 #nav {
   height: 2.5em;
   margin-top: auto;

@@ -18,6 +18,7 @@ function App() {
         <main id="main">
           <div id="game">
             <GameComponent />
+            {/* <button onClick={()=>document.getElementById("game").muted = true} id='mute'>mute</button> */}
           </div>
           <Routes>
             <Route path="/" element={<About />} />
