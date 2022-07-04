@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 export class CreditsScene extends Phaser.Scene {
   constructor() {
     super('CreditsScene');
+
   }
 
   init(data) {
@@ -25,9 +26,7 @@ export class CreditsScene extends Phaser.Scene {
     let keySPACE = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-    if (keySPACE.isDown && !this.modeSelected) {
-      this.add.text(250, 400, 'GET READY');
-      this.modeSelected = true;
+    if (keySPACE.isDown) {
       this.scene.start('GameScene');
     }
   }
