@@ -13,7 +13,7 @@ class TitleScene extends Phaser.Scene {
     this.add.image(0, 0, 'bkg').setScale(3);
     this.add.image(400, 200, 'title');
     this.add.text(300,350,'Press SPACE to start!')
-    this.add.text(50,570,'Created by: The DareDevs')
+    this.add.text(300,570,'The DareDevs')
   }
   update(){
     let keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
