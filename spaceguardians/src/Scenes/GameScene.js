@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 
 class GameScene extends Phaser.Scene {
   constructor() {
-    super('gameScene');
+    super('GameScene');
     this.player = null;
     this.aliens = null;
     this.starfield = null;
@@ -21,6 +21,7 @@ class GameScene extends Phaser.Scene {
     this.playerLives = 3;
     this.resources = 0;
     this.timer = 0;
+    this.explosion = [];  
   }
   extractScore(){
   return this.score
@@ -34,18 +35,21 @@ class GameScene extends Phaser.Scene {
     this.load.image('strongestInvader', '../assets/strongestEnemy.png');
     this.load.image('bullet', '../assets/bullet.png');
     this.load.image('enemyBullet', '../assets/enemyBullet.png');
+    this.load.spritesheet('playerExplosion', '../assets/playerExplosion.png', {frameWidth: 2048, frameHeight: 1448})
+    this.load.spritesheet('explosion', '../assets/explosion.png', {frameWidth: 48, frameHeight: 48 })
     this.load.audio('shoot', ['../assets/shoot.wav']);
     this.load.audio('death', ['../assets/death.wav']);
     this.load.audio('tune', ['../assets/music.mp3']);
     this.load.audio('levelEnd', ['../assets/level.wav']);
     this.load.audio('enemyBulletSound', ['../assets/enemyBulletSound.wav']);
+    this.load.audio('playerDeathSound', ['../assets/playerDeathSound.wav'])
   }
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     this.starfield = this.add.image(0, 0, 'starfield').setScale(3);
     this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
     this.levelTable = this.add.text(710, 20, `Level : ${this.level}`);
-    this.livesDisplayer = this.add.text(710, 580, `Lives : ${this.playerLives}`);
+    this.livesDisplayer = this.add.text(71, 570, `Lives : ${this.playerLives}`);
 
     
     // creating the bullet
@@ -108,18 +112,41 @@ class GameScene extends Phaser.Scene {
     this.enemyBulletSound = this.sound.add('enemyBulletSound', { loop: false });
     this.music = this.sound.add('tune', { loop: true, volume: 0.7 });
     this.levelEnd = this.sound.add('levelEnd', { loop: false });
+    this.playerDeathFX = this.sound.add('playerDeathSound', {loop: false});
 
-    //creating the player
 
 
     //creating the aliens
     this.aliens = this.add.group();
     this.container = this.add.container(0, 0);
     this.createAliens();
+
+    //creating the player
     this.createPLayer();
 
     //play the music
     this.music.play();
+
+    //player death animation
+    this.anims.create({
+      key:'playerDeath',
+      frames : this.anims.generateFrameNumbers('explosion', {
+        start: 0,
+        end: 3
+      }),
+      repeat:0,
+      frameRate: 20
+    });
+
+     // Create our explosion sprite and hide it initially
+     this.explosion = this.physics.add.sprite(100, 100, 'explosion');
+     this.explosion.setScale(1);
+     this.explosion.setVisible(false);
+ 
+     // Set it to hide when the explosion finishes
+     this.explosion.on('animationcomplete', () => {
+       this.explosion.setVisible(false);
+     })
   }
   
   createPLayer() {  this.player = this.physics.add.image(400, 530, 'player');
@@ -347,8 +374,6 @@ strongestEnemyFire() {
 }
 
 destroyPlayer(player, bullet) { 
-  console.log(player, bullet,"hit");
-
   player.destroy();
   bullet.destroy();
   }
@@ -397,9 +422,12 @@ destroyPlayer(player, bullet) {
         this.lastFired = time + 50;
       }
     }
-
+//player death updates
     if (this.player.active === false){
-      this.playerLives-=1;
+      this.explosion.play('playerDeath');
+      this.playerDeathFX.play();
+      this.playerLives -= 1;
+      this.livesDisplayer.setText(`Lives: ${this.playerLives}`);  
       this.createPLayer()
     }
 
@@ -481,7 +509,29 @@ destroyPlayer(player, bullet) {
       this.lastRedInvaderLength = 6;
       this.lastStrongInvaderLength = 2;
       this.levelEnding();
-      setTimeout(this.createAliens(), 2000);
+      this.scene.time.addEvent({
+        delay: 2000,
+        callback: () => this.createAliens()
+      });
+    
+     // this.createAliens();
+    }
+    //player extra lives
+    if(this.score === 1000 || this.score === 10000){
+      this.playerLives += 1;
+      this.livesDisplayer.setText(`Lives: ${this.playerLives}`);
+    }
+    //Game Over logic
+    if (this.playerLives === 0){
+      this.score = 0;
+      this.level = 1;
+      this.lastBlueInvaderLength = 30;
+      this.lastyellowInvaderLength = 8;
+      this.lastRedInvaderLength = 6;
+      this.lastStrongInvaderLength = 2;
+      this.playerLives = 3;
+      this.scene.start('CreditsScene')
+
     }
   }
 }
