@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 
+
 class GameScene extends Phaser.Scene {
   constructor() {
     super('gameScene');
@@ -20,6 +21,9 @@ class GameScene extends Phaser.Scene {
     this.playerLives = 3;
     this.resources = 0;
     this.timer = 0;
+  }
+  extractScore(){
+  return this.score
   }
   preload() {
     this.load.image('starfield', '../assets/bkg.jpg');
