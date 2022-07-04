@@ -1,14 +1,14 @@
 import React from 'react';
 import Signin from './Components/SignIn.jsx';
 import Signup from './Components/SignUp.jsx';
-import Account from './Components/Account.jsx';
+import Chatroom from './Components/Chatroom.jsx';
 import { Route, Routes } from 'react-router-dom';
 import { AuthContextProvider } from './context/authContext.js';
 import ProtectedRoute from './Components/ProtectedRoute.js';
 import './App.css';
 import Header from './Components/Header.jsx';
 import GameComponent from './Game.js';
-
+import Four04 from './Components/Four04.jsx'
 function App() {
   return (
     <div className="App">
@@ -21,16 +21,16 @@ function App() {
           <Routes>
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/livechat" element={<Account />} />
+            <Route path="/livechat" element={<Chatroom />} />
             <Route
               path="/account"
               element={
                 <ProtectedRoute>
-                  <Account />
+                  <Chatroom />
                 </ProtectedRoute>
               }
             />
-            <Route path='*' element={<Account/>}/>
+            <Route path='/*' element={<Four04/>}/>
           </Routes>
         </main>
       </AuthContextProvider>

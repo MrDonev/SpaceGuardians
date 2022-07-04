@@ -28,7 +28,7 @@ const Signin = () => {
 
   return (
     <div className="body">
-     {user.displayName===undefined?
+     {user===null?
      <>
      <div>
         <h1 className="text-2xl font-bold py-2">Sign in to your account</h1>

@@ -1,24 +1,35 @@
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import Nav from './Nav';
 import { UserAuth } from '../context/authContext';
 
 const Header = () => {
   const { user, logout } = UserAuth();
-  console.log(user.photoURL)
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/livechat");
+      console.log("You are logged out");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <header>
       <h1>Welcome to the Space Guardians gaming community</h1>
       <section id="userLog">
-        <p>Welcome, {user.displayName!==undefined ? user.displayName : 'Guest'}</p>
-        {(user.displayName===undefined)?
+        <p>Welcome, {user !== null ? user.displayName : 'Guest'}</p>
+        {(user===null)?
          <><Link to="/signin">
           <button>Log in</button>
         </Link></>:
-        <><img id='userPhoto' alt='userPhoto'src={user.photoURL}/>
+        <section id='loggedUser'>
+          <div id='userImgContainer'><img id='userPhoto' alt='userPhoto'src={user.photoURL}/></div>
         <Link to="/signin">
-          <button>Log out</button>
+          <button onClick={handleLogout}>Log out</button>
         </Link>
-        </>}
+        </section>}
       </section>
       <Nav />
     </header>
