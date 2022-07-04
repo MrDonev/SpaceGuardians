@@ -27,29 +27,29 @@ const Signin = () => {
   };
 
   return (
-    <div className="body">
+    <div className="signing">
      {user===null?
      <>
      <div>
-        <h1 className="text-2xl font-bold py-2">Sign in to your account</h1>
-        <p className="py-2">
+        <h1>Sign in to your account</h1>
+        <p>
           Don't have an account yet?
           <Link to="/signup" className="underline">
             <button>Sign up here</button>
           </Link>
         </p>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Email Address</label>
+      <form id="signUpForm" onSubmit={handleSubmit}>
+        <div >
+          <label id='signUpEmail'>Email Address</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
             className="input"
             type="email"
           />
         </div>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Password</label>
+        <div>
+          <label id='signUpPass'>Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
             className="input"

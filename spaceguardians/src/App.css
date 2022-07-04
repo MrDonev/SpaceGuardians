@@ -27,7 +27,7 @@ header h1 {
   margin: auto;
   grid-area: h1;
 }
-header button {
+header button, .signing button {
   border-radius: 0.8em;
   border: 1px transparent;
   margin: 0.2em;
@@ -36,8 +36,12 @@ header button {
   background-color: rgb(18, 95, 37);
   color: beige;
 }
-header button:hover {
+header button:hover, .signing button:hover {
   background-color: rgb(21, 141, 10);
+}
+#nav button{
+  text-align: center;
+  width:9em;
 }
 #error {
   text-align: center;
@@ -51,7 +55,7 @@ header button:hover {
   margin-top: auto;
   float: center;
   grid-area: nav;
-  margin-right: 15em;
+  margin-right: 11em;
   margin-bottom: 0.5em;
 }
 #nav button {
@@ -85,10 +89,29 @@ header button:hover {
   justify-content: center;
   margin-right: 1.5em;
 }
-
+.signing{
+  margin: 0.5em;
+  height: 37.5em;
+  text-align: center;
+  color: rgb(26, 150, 15);
+  background-color: #202029;
+}
+#signUpForm input{
+width: 13em;
+height: 2em;
+border-radius: 0.2em;
+margin: 0.1em;
+}
 .list {
   list-style: none;
   margin: 0.1em;
+}
+#about{
+  text-align: center;
+  color: rgb(26, 150, 15);
+  background-color: #202029;
+  margin: 0.5em;
+  height: 37.5em;
 }
 #main {
   display: grid;

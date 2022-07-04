@@ -8,7 +8,8 @@ import ProtectedRoute from './Components/ProtectedRoute.js';
 import './App.css';
 import Header from './Components/Header.jsx';
 import GameComponent from './Game.js';
-import Four04 from './Components/Four04.jsx'
+import Four04 from './Components/Four04.jsx';
+import About from './Components/About.jsx';
 function App() {
   return (
     <div className="App">
@@ -19,6 +20,7 @@ function App() {
             <GameComponent />
           </div>
           <Routes>
+            <Route path="/" element={<About />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/livechat" element={<Chatroom />} />
@@ -30,7 +32,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path='/*' element={<Four04/>}/>
+            <Route path="/*" element={<Four04 />} />
           </Routes>
         </main>
       </AuthContextProvider>

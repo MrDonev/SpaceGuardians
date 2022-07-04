@@ -9,6 +9,9 @@ const Nav = () => {
       <Link to="/livechat">
         <button>Live Chatroom</button>
       </Link>
+      <Link to="/">
+        <button>Home</button>
+      </Link>
     </section>
   );
 };
