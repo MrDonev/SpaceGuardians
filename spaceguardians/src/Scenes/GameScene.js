@@ -42,8 +42,7 @@ class GameScene extends Phaser.Scene {
       'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
     head.appendChild(link);
 
-    this.load.bitmapFont('arcade', '../assets/arcadeFont.png');
-    this.load.image('starfield', '../assets/bkg.jpg');
+    this.load.image('starfield', '../assets/stars.png');
     this.load.image('player', '../assets/player.png');
     this.load.image('blueInvader', '../assets/blueEnemy.png');
     this.load.image('blueYellowInvader', '../assets/blueYellowEnemy.png');
@@ -52,8 +51,8 @@ class GameScene extends Phaser.Scene {
     this.load.image('bullet', '../assets/bullet.png');
     this.load.image('enemyBullet', '../assets/enemyBullet.png');
     this.load.spritesheet('explosion', '../assets/explosion.png', {
-      frameWidth: 48,
-      frameHeight: 48,
+      frameWidth: 24,
+      frameHeight: 36,
     });
     this.load.audio('shoot', ['../assets/shoot.wav']);
     this.load.audio('death', ['../assets/death.wav']);
@@ -66,7 +65,8 @@ class GameScene extends Phaser.Scene {
 
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
-    //this.starfield = this.add.image(0, 0, 'starfield').setScale(1);
+    this.starfield = this.add.tileSprite(0, 0, 800, 600,'starfield').setScale(2);
+    console.log(this.starfield)
     this.scoreTable = this.add.text(5, 5, `Score : ${this.score}`, {
       fontFamily: "'Press Start 2P', serif",
       fontSize: 20,
@@ -86,7 +86,7 @@ class GameScene extends Phaser.Scene {
       align: 'center',
     });
     this.scoreRankDisplayer = this.add.text(
-      600,
+      630,
       570,
       `Rank: ${this.scoreRank}`,
       {
@@ -176,16 +176,23 @@ class GameScene extends Phaser.Scene {
       key: 'playerDeath',
       frames: this.anims.generateFrameNumbers('explosion', {
         start: 0,
-        end: 3,
+        end: 7,
       }),
       repeat: 0,
-      frameRate: 3,
+      frameRate: 7,
     });
 
     // Create our explosion sprite and hide it initially
-    this.explosion = this.physics.add.sprite(100, 100, 'explosion');
+    this.explosion = this.physics.add.sprite(
+      this.player.x,
+      this.player.y,
+      'explosion'
+    );
     this.explosion.setScale(1);
-    this.explosion.setVisible(false);
+    this.explosion.setVisible(false); 
+    this.explosion.body.allowGravity = false;
+
+
 
     //Set it to hide when the explosion finishes
     this.explosion.on('animationcomplete', () => {
@@ -198,6 +205,7 @@ class GameScene extends Phaser.Scene {
     this.player = this.physics.add.image(400, 530, 'player');
     this.player.setCollideWorldBounds(true);
     this.player = this.physics.add.existing(this.player, 0);
+    this.player.body.allowGravity = false;
     this.physics.add.collider(
       this.player,
       this.enemyBullets,
@@ -459,15 +467,19 @@ class GameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    //Score and Level set variable for Game over Screen
-    this.overall = { score: this.score, level: this.level };
+
+    //scroll the starfield
+    this.starfield.tilePositionY -=0.5 ;
+    //Score and Level set variable for Game-over Screen
+    this.overall = { score: this.score, level: this.level, music: this.music };
 
     //Initiate the keyboard keys required
     const cursors = this.input.keyboard.createCursorKeys();
 
     //pause the game
     if (cursors.shift.isDown) {
-      this.scene.pause("GameScene");
+      this.music.setVolume(0.2);
+      this.scene.pause('GameScene');
       this.scene.launch('PauseScene', this.overall);
     }
 
@@ -495,9 +507,27 @@ class GameScene extends Phaser.Scene {
         this.lastFired = time + 50;
       }
     }
+
+    //utilise FullScreen mode
+    var FKey = this.input.keyboard.addKey('F');
+    FKey.on(
+      'down',
+      function () {
+        if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+        } else {
+          this.scale.startFullscreen();
+        }
+      },
+      this
+    );
+
     //player death updates
     if (this.player.active === false) {
-      this.explosion.play('playerDeath');
+      //this.player.setVelocity(0);
+      this.player.setVisible(false);
+      this.explosion.setVisible(true);
+      this.explosion.play('playerDeath', true);
       this.playerDeathFX.play();
       this.playerLives -= 1;
       this.livesDisplayer.setText(`Lives: ${this.playerLives}`);
@@ -509,10 +539,6 @@ class GameScene extends Phaser.Scene {
 
     //level difficulty curve
     let random = Phaser.Math.Between(1, 1000);
-    //this.timer += (delta * random) / this.level;
-    //while (this.timer > 6000 / this.level) {
-    //this.resources += 4;
-    //this.timer -= 6000;
     if (random < 8 + this.level) {
       this.blueEnemyFire();
       this.shootingRate++;
@@ -521,7 +547,7 @@ class GameScene extends Phaser.Scene {
       this.yellowEnemyFire();
       this.shootingRate++;
     }
-    if (random > 340 + this.level && random < 342 - this.level){
+    if (random > 340 + this.level && random < 342 - this.level) {
       this.redEnemyFire();
       this.shootingRate++;
     }
@@ -531,11 +557,11 @@ class GameScene extends Phaser.Scene {
     }
 
     //shooting Rate Timer
-    this.timer += (delta);
+    this.timer += delta;
     while (this.timer > 5000) {
-    this.resources += 5;
-    this.timer -= 5000;
-    this.shootingRate = 0;
+      this.resources += 5;
+      this.timer -= 5000;
+      this.shootingRate = 0;
     }
     //Removing invaders from their object to enable removal from the game
     if (this.started) {

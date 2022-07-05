@@ -9,7 +9,7 @@ class TitleScene extends Phaser.Scene {
   }
   preload() {
     this.load.image('title', '../assets/SG.png');
-
+    this.load.audio('levelEnd', ['../assets/level.wav']);
     var head  = document.getElementsByTagName('head')[0];
     var link  = document.createElement('link');
     link.rel  = 'stylesheet';
@@ -18,6 +18,7 @@ class TitleScene extends Phaser.Scene {
   }
   create() {
     this.add.image(400, 150, 'title');
+    this.levelEnd = this.sound.add('levelEnd', { loop: false });
 
     
     this.text = this.add.text(200,300,'Press SPACE to start!', {
@@ -50,6 +51,9 @@ class TitleScene extends Phaser.Scene {
       color: '#ff0000',
       align: 'center'
     })
+
+    this.levelEnd.play()
+
   }
   update(time){
     let keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

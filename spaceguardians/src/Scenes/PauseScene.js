@@ -8,6 +8,7 @@ export class PauseScene extends Phaser.Scene {
   init(data) {
     this.score = data.score;
     this.level = data.level;
+    this.music = data.music;
   }
 
   preload() {
@@ -20,19 +21,27 @@ export class PauseScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 200, 'title');
-    this.add.text(200, 280, `Current Score - ${this.score}`, {
+    //this.add.image(400, 200, 'title');
+    this.add.text(320, 280, `PAUSED`, {
       fontFamily: '\'Press Start 2P\', serif',
-      fontSize: 20,
+      fontSize: 30,
       color: '#ff0000',
       align: 'center'
     });
-    this.add.text(200, 310, `Current Level - ${this.level}`, {
-      fontFamily: '\'Press Start 2P\', serif',
-      fontSize: 20,
-      color: '#ff0000',
-      align: 'center'
-    });
+
+    // this.add.image(400, 200, 'title');
+    // this.add.text(200, 280, `Current Score - ${this.score}`, {
+    //   fontFamily: '\'Press Start 2P\', serif',
+    //   fontSize: 20,
+    //   color: '#ff0000',
+    //   align: 'center'
+    // });
+    // this.add.text(200, 310, `Current Level - ${this.level}`, {
+    //   fontFamily: '\'Press Start 2P\', serif',
+    //   fontSize: 20,
+    //   color: '#ff0000',
+    //   align: 'center'
+    // });
     this.add.text(200, 350, 'Press SHIFT to continue!', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
@@ -42,9 +51,10 @@ export class PauseScene extends Phaser.Scene {
   }
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    this.overall = { score: this.score, level: this.level };
+    this.overall = { score: this.score, level: this.level , music: this.music};
 
     if(cursors.shift.isDown){
+        this.music.setVolume(0.7);
         this.scene.resume("GameScene", this.overall);
         this.scene.stop("PauseScene");
         }
