@@ -6,6 +6,8 @@ body {
 }
 header {
   display: grid;
+  background-image: url('../public/assets/header.jpg');
+
   background-color: #202029;
   margin-bottom: 0.2em;
   height: 30%;
@@ -23,8 +25,8 @@ header {
   text-align: right;
 }
 header h1 {
-  display: flex;
   margin: auto;
+  margin-bottom: 1em;
   grid-area: h1;
 }
 header button, .signing button {
@@ -49,6 +51,7 @@ header button:hover, .signing button:hover {
 }
 #userPhoto {
   border-radius: 1.5em;
+  border: 1px solid whitesmoke;
 }
 #game canvas{
   cursor: none;
@@ -77,10 +80,12 @@ header button:hover, .signing button:hover {
   font-size: large;
   color: rgb(28, 163, 16);
 }
+
 #message-input {
   white-space: pre-line;
   width: 80%;
   height: 2.5em;
+  bottom: 0;
 }
 #message-btn {
   padding: 0.7em;
@@ -139,6 +144,4 @@ margin: 0.1em;
   text-align: center;
   grid-area: right-section;
 }
-#hScores{
-  
-}
+
