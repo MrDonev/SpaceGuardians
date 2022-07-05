@@ -9,7 +9,6 @@ const Home=()=>{
      getGames().then((data)=>{
      setReviews(data.slice(randomNum,randomNum+10));
      setIsLoading(false)
-     console.log(reviews)
      })
     },[isLoading])
     return <>
@@ -18,7 +17,7 @@ const Home=()=>{
     <ul id="articleList">
         <h1>Other games you may find interesting:</h1>
     {reviews.map(article=>{
-        return <li><ArticleCard article={article}/></li>
+        return <li key={article.id}><ArticleCard article={article}/></li>
     }) }
 </ul>
     

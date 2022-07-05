@@ -29,6 +29,8 @@ class GameScene extends Phaser.Scene {
     this.enemyShoot = 1000;
     this.shootingRate = 0;
   }
+
+  //custom method to extract the score
   extractScore() {
     return this.score;
   }
@@ -465,8 +467,8 @@ class GameScene extends Phaser.Scene {
 
     //pause the game
     if (cursors.shift.isDown) {
-      this.scene.pause();
-      this.scene.start('PauseScene', this.overall);
+      this.scene.pause("GameScene");
+      this.scene.launch('PauseScene', this.overall);
     }
 
     //create invader object length variables
@@ -533,7 +535,6 @@ class GameScene extends Phaser.Scene {
     while (this.timer > 5000) {
     this.resources += 5;
     this.timer -= 5000;
-    console.log(this.shootingRate)
     this.shootingRate = 0;
     }
     //Removing invaders from their object to enable removal from the game
