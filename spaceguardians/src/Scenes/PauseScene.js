@@ -21,22 +21,22 @@ export class PauseScene extends Phaser.Scene {
 
   create() {
     this.add.image(400, 200, 'title');
-    this.add.text(300, 280, `Current Score - ${this.score}`, {
+    this.add.text(200, 280, `Current Score - ${this.score}`, {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
-      color: '#fff',
+      color: '#ff0000',
       align: 'center'
     });
-    this.add.text(300, 310, `Current Level - ${this.level}`, {
+    this.add.text(200, 310, `Current Level - ${this.level}`, {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
-      color: '#fff',
+      color: '#ff0000',
       align: 'center'
     });
-    this.add.text(300, 350, 'Press SHIFT to continue!', {
+    this.add.text(200, 350, 'Press SHIFT to continue!', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
-      color: '#fff',
+      color: '#ff0000',
       align: 'center'
     });
   }

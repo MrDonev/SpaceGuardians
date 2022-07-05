@@ -27,17 +27,18 @@ class GameScene extends Phaser.Scene {
     this.overall = {};
     this.isPaused = false;
     this.enemyShoot = 1000;
+    this.shootingRate = 0;
   }
   extractScore() {
     return this.score;
   }
   preload() {
-    var head  = document.getElementsByTagName('head')[0];
-    var link  = document.createElement('link');
-    link.rel  = 'stylesheet';
-    link.href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap";
+    var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href =
+      'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
     head.appendChild(link);
-
 
     this.load.bitmapFont('arcade', '../assets/arcadeFont.png');
     this.load.image('starfield', '../assets/bkg.jpg');
@@ -61,35 +62,38 @@ class GameScene extends Phaser.Scene {
     this.load.audio('extraLife', ['../assets/extraLife.wav']);
   }
 
-
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     //this.starfield = this.add.image(0, 0, 'starfield').setScale(1);
     this.scoreTable = this.add.text(5, 5, `Score : ${this.score}`, {
-      fontFamily: '\'Press Start 2P\', serif',
+      fontFamily: "'Press Start 2P', serif",
       fontSize: 20,
       color: '#ff0000',
-      align: 'center'
+      align: 'center',
     });
-    this.levelTable = this.add.text(600, 5, `Level: ${this.level}`, {
-      fontFamily: '\'Press Start 2P\', serif',
+    this.levelTable = this.add.text(620, 5, `Level: ${this.level}`, {
+      fontFamily: "'Press Start 2P', serif",
       fontSize: 20,
       color: '#ff0000',
-      align: 'center'
+      align: 'center',
     });
     this.livesDisplayer = this.add.text(5, 570, `Lives: ${this.playerLives}`, {
-      fontFamily: '\'Press Start 2P\', serif',
+      fontFamily: "'Press Start 2P', serif",
       fontSize: 20,
       color: '#ff0000',
-      align: 'center'
+      align: 'center',
     });
-    this.scoreRankDisplayer = this.add.text(600, 570, `Rank: ${this.scoreRank}`, {
-      fontFamily: '\'Press Start 2P\', serif',
-      fontSize: 20,
-      color: '#ffff00',
-      align: 'center'
-    });
-
+    this.scoreRankDisplayer = this.add.text(
+      600,
+      570,
+      `Rank: ${this.scoreRank}`,
+      {
+        fontFamily: "'Press Start 2P', serif",
+        fontSize: 20,
+        color: '#ffff00',
+        align: 'center',
+      }
+    );
 
     // creating the player bullet
     this.lastFired = null;
@@ -133,7 +137,7 @@ class GameScene extends Phaser.Scene {
       },
       update: function (time, delta) {
         this.y += this.speed * delta;
-           if (this.y < -50) {
+        if (this.y < -50) {
           this.setActive(false);
           this.setVisible(false);
         }
@@ -152,16 +156,15 @@ class GameScene extends Phaser.Scene {
     this.music = this.sound.add('tune', { loop: true, volume: 0.7 });
     this.levelEnd = this.sound.add('levelEnd', { loop: false });
     this.playerDeathFX = this.sound.add('playerDeathSound', { loop: false });
-    this.extraLife = this.sound.add('extraLife', {loop : false});
+    this.extraLife = this.sound.add('extraLife', { loop: false });
 
     //creating the aliens
     this.aliens = this.add.group();
     this.container = this.add.container(0, 0);
     this.createAliens();
 
-     //creating the player
-    this.createPLayer()
-   
+    //creating the player
+    this.createPLayer();
 
     //play the music
     this.music.play();
@@ -183,9 +186,9 @@ class GameScene extends Phaser.Scene {
     this.explosion.setVisible(false);
 
     //Set it to hide when the explosion finishes
-     this.explosion.on('animationcomplete', () => {
-       this.explosion.setVisible(false);
-     })
+    this.explosion.on('animationcomplete', () => {
+      this.explosion.setVisible(false);
+    });
   }
 
   //player creation
@@ -199,13 +202,8 @@ class GameScene extends Phaser.Scene {
       this.destroyPlayer,
       this.world
     );
-
-
-    
   }
 
-  
- 
   //enemy creation
   createAliens() {
     let blueInvaderCounter = 0;
@@ -427,8 +425,6 @@ class GameScene extends Phaser.Scene {
   //bespoke methods
 
   destroyPlayer(player, bullet) {
-    console.log("hit");
-
     player.destroy();
     bullet.destroy();
   }
@@ -460,10 +456,7 @@ class GameScene extends Phaser.Scene {
     this.levelEnd.play();
   }
 
-  
-
   update(time, delta) {
-
     //Score and Level set variable for Game over Screen
     this.overall = { score: this.score, level: this.level };
 
@@ -471,12 +464,10 @@ class GameScene extends Phaser.Scene {
     const cursors = this.input.keyboard.createCursorKeys();
 
     //pause the game
-    if(cursors.shift.isDown){
+    if (cursors.shift.isDown) {
       this.scene.pause();
-      this.scene.start("PauseScene", this.overall);
-      }
-    
-      
+      this.scene.start('PauseScene', this.overall);
+    }
 
     //create invader object length variables
     let blueLength = Object.keys(this.blueInvader).length;
@@ -514,20 +505,35 @@ class GameScene extends Phaser.Scene {
     //extra player lives function call
     this.extraLives();
 
-    
-
     //level difficulty curve
     let random = Phaser.Math.Between(1, 1000);
     //this.timer += (delta * random) / this.level;
     //while (this.timer > 6000 / this.level) {
-      //this.resources += 4;
-      //this.timer -= 6000;
-      if (random < 8 + this.level) this.blueEnemyFire();
-      if (random < 50 + this.level && random > 48 - this.level) this.yellowEnemyFire();
-      if (random > 340 + this.level && random < 342 - this.level) this.redEnemyFire();
-      if (random >= 998 - this.level) this.strongestEnemyFire();
-    //}
-
+    //this.resources += 4;
+    //this.timer -= 6000;
+    if (random < 8 + this.level) {
+      this.blueEnemyFire();
+      this.shootingRate++;
+    }
+    if (random < 50 + this.level && random > 48 - this.level) {
+      this.yellowEnemyFire();
+      this.shootingRate++;
+    }
+    if (random > 340 + this.level && random < 342 - this.level){
+      this.redEnemyFire();
+      this.shootingRate++;
+    }
+    if (random >= 998 - this.level) {
+      this.strongestEnemyFire();
+      this.shootingRate++;
+    }
+    this.timer += (delta);
+    while (this.timer > 5000) {
+    this.resources += 5;
+    this.timer -= 5000;
+    console.log(this.shootingRate)
+    this.shootingRate = 0;
+    }
     //Removing invaders from their object to enable removal from the game
     if (this.started) {
       Object.keys(this.blueInvader).forEach((invader) => {
@@ -599,10 +605,8 @@ class GameScene extends Phaser.Scene {
       this.lastRedInvaderLength = 6;
       this.lastStrongInvaderLength = 2;
       this.levelEnding();
-      this.time.delayedCall(1000, this.createAliens(), [this]);
+      this.createAliens();
     }
-
-    
 
     //Game Over logic
     if (this.playerLives < 0) {
