@@ -45,6 +45,12 @@ class TitleScene extends Phaser.Scene {
       color: '#ff0000',
       align: 'center'
     })
+    this.add.text(180,490,'Toggle Full Screen - F', {
+      fontFamily: '\'Press Start 2P\', serif',
+      fontSize: 20,
+      color: '#ff0000',
+      align: 'center'
+    })
     this.add.text(230,570,'The DareDevs', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 30,
