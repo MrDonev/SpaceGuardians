@@ -42,10 +42,11 @@ export class PauseScene extends Phaser.Scene {
   }
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
+    this.overall = { score: this.score, level: this.level };
 
     if(cursors.shift.isDown){
-        this.scene.pause();
-        this.scene.resume("GameScene");
+        this.scene.resume("GameScene", this.overall);
+        this.scene.stop("PauseScene");
         }
   }
 }
