@@ -34,7 +34,7 @@ class GameScene extends Phaser.Scene {
     var head  = document.getElementsByTagName('head')[0];
     var link  = document.createElement('link');
     link.rel  = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy';
+    link.href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap";
     head.appendChild(link);
 
 
@@ -64,22 +64,22 @@ class GameScene extends Phaser.Scene {
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     //this.starfield = this.add.image(0, 0, 'starfield').setScale(1);
-    this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`, {
-      fontFamily: '\'Sorts Mill Goudy\', serif',
+    this.scoreTable = this.add.text(5, 5, `Score : ${this.score}`, {
+      fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
-      color: '#fff',
+      color: '#ff0000',
       align: 'center'
     });
-    this.levelTable = this.add.text(700, 20, `Level : ${this.level}`, {
-      fontFamily: '\'Sorts Mill Goudy\', serif',
+    this.levelTable = this.add.text(600, 5, `Level: ${this.level}`, {
+      fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
-      color: '#fff',
+      color: '#ff0000',
       align: 'center'
     });
-    this.livesDisplayer = this.add.text(20, 570, `Lives : ${this.playerLives}`, {
-      fontFamily: '\'Sorts Mill Goudy\', serif',
+    this.livesDisplayer = this.add.text(5, 570, `Lives: ${this.playerLives}`, {
+      fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
-      color: '#fff',
+      color: '#ff0000',
       align: 'center'
     });
 
