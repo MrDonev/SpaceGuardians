@@ -21,20 +21,20 @@ export class CreditsScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 200, 'title');
-    this.add.text(200, 280, `You scored - ${this.score}`, {
+    this.add.image(400, 150, 'title');
+    this.add.text(230, 280, `You scored - ${this.score}`, {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
       align: 'center'
     });
-    this.add.text(170, 330, `You reached Level - ${this.level}`, {
+    this.add.text(190, 330, `You reached Level - ${this.level}`, {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#0404fc',
       align: 'center'
     });
-    this.add.text(150, 580, 'Written by The DareDevs', {
+    this.add.text(180, 580, 'Written by The DareDevs', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
