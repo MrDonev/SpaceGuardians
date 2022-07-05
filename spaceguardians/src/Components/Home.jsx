@@ -13,8 +13,10 @@ const Home=()=>{
      })
     },[isLoading])
     return <>
-    {isLoading ? <h1>Home</h1> : 
+    {isLoading ? <h1>Loading...</h1> : 
+    
     <ul id="articleList">
+        <h1>Other games you may find interesting:</h1>
     {reviews.map(article=>{
         return <li><ArticleCard article={article}/></li>
     }) }
