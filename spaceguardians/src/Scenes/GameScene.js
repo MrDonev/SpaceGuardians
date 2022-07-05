@@ -170,6 +170,7 @@ class GameScene extends Phaser.Scene {
 
     //play the music
     this.music.play();
+    console.log(this.music);
 
     //player death animation
     this.anims.create({
@@ -458,15 +459,18 @@ class GameScene extends Phaser.Scene {
     this.levelEnd.play();
   }
 
+   
+
   update(time, delta) {
     //Score and Level set variable for Game over Screen
-    this.overall = { score: this.score, level: this.level };
+    this.overall = { score: this.score, level: this.level, music: this.music };
 
     //Initiate the keyboard keys required
     const cursors = this.input.keyboard.createCursorKeys();
 
     //pause the game
     if (cursors.shift.isDown) {
+      this.music.pause();
       this.scene.pause("GameScene");
       this.scene.launch('PauseScene', this.overall);
     }
@@ -495,6 +499,24 @@ class GameScene extends Phaser.Scene {
         this.lastFired = time + 50;
       }
     }
+
+    //utilise FullScreen mode
+    var FKey = this.input.keyboard.addKey('F');
+
+    FKey.on('down', function () {
+
+        if (this.scale.isFullscreen)
+        {
+            this.scale.stopFullscreen();
+        }
+        else
+        {
+            this.scale.startFullscreen();
+        }
+
+    }, this);
+
+
     //player death updates
     if (this.player.active === false) {
       this.explosion.play('playerDeath');
@@ -509,11 +531,7 @@ class GameScene extends Phaser.Scene {
 
     //level difficulty curve
     let random = Phaser.Math.Between(1, 1000);
-    //this.timer += (delta * random) / this.level;
-    //while (this.timer > 6000 / this.level) {
-    //this.resources += 4;
-    //this.timer -= 6000;
-    if (random < 8 + this.level) {
+      if (random < 8 + this.level) {
       this.blueEnemyFire();
       this.shootingRate++;
     }

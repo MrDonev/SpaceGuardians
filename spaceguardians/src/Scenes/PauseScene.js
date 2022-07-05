@@ -8,6 +8,7 @@ export class PauseScene extends Phaser.Scene {
   init(data) {
     this.score = data.score;
     this.level = data.level;
+    this.music = data.music;
   }
 
   preload() {
@@ -42,9 +43,12 @@ export class PauseScene extends Phaser.Scene {
   }
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    this.overall = { score: this.score, level: this.level };
+    this.overall = { score: this.score, level: this.level , music: this.music};
 
     if(cursors.shift.isDown){
+      console.log(this.music);
+
+        this.music.resume();
         this.scene.resume("GameScene", this.overall);
         this.scene.stop("PauseScene");
         }
