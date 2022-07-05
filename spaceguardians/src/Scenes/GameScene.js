@@ -527,6 +527,8 @@ class GameScene extends Phaser.Scene {
       this.strongestEnemyFire();
       this.shootingRate++;
     }
+
+    //shooting Rate Timer
     this.timer += (delta);
     while (this.timer > 5000) {
     this.resources += 5;
