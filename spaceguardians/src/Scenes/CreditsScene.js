@@ -27,6 +27,7 @@ export class CreditsScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
     if (keySPACE.isDown) {
+      
       this.scene.start('GameScene');
     }
   }
