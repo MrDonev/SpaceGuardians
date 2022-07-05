@@ -11,6 +11,7 @@ import GameComponent from './Game.js';
 import Four04 from './Components/Four04.jsx';
 import About from './Components/About.jsx';
 import HighScores from './Components/HighScores.jsx';
+import UserProfile from './Components/UserProfile.jsx';
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/livechat" element={<Chatroom />} />
             <Route path="/highscores" element={<HighScores />} />
+            <Route path="/user" element={<UserProfile/>}/>
             <Route
               path="/account"
               element={

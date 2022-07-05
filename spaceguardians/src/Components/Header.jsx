@@ -25,7 +25,7 @@ const Header = () => {
           <button>Log in</button>
         </Link></>:
         <section id='loggedUser'>
-          <div id='userImgContainer'><img id='userPhoto' alt='userPhoto'src={user.photoURL}/></div>
+          <div id='userImgContainer'><Link to='/user'><img id='userPhoto' alt='userPhoto'src={user.photoURL}/></Link></div>
         <Link to="/signin">
           <button onClick={handleLogout}>Log out</button>
         </Link>
