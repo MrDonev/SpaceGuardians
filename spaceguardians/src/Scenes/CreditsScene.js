@@ -40,7 +40,7 @@ export class CreditsScene extends Phaser.Scene {
       color: '#ff0000',
       align: 'center'
     });
-    this.add.text(200, 350, 'Press SPACE to start!', {
+    this.add.text(200, 350, 'Press SPACE to restart!', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: 'ff0000',
