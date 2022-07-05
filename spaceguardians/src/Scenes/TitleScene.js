@@ -22,7 +22,7 @@ class TitleScene extends Phaser.Scene {
       color: '#ff0000',
       align: 'center'
     })
-    this.add.text(240,570,'The DareDevs', {
+    this.add.text(230,570,'The DareDevs', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 30,
       color: '#ff0000',

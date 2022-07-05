@@ -18,6 +18,7 @@ class GameScene extends Phaser.Scene {
     this.started = false;
     this.level = 1;
     this.playerLives = 2;
+    this.scoreRank = 0;
     this.extraLifeinterval = 5000;
     this.extraLifeCounter = 1;
     this.resources = 0;
@@ -80,6 +81,12 @@ class GameScene extends Phaser.Scene {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
+      align: 'center'
+    });
+    this.scoreRankDisplayer = this.add.text(600, 570, `Rank: ${this.scoreRank}`, {
+      fontFamily: '\'Press Start 2P\', serif',
+      fontSize: 20,
+      color: '#ffff00',
       align: 'center'
     });
 
