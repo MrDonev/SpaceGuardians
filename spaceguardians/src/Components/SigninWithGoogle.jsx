@@ -27,7 +27,7 @@ export const SignInWithGoogle = () => {
         const user = {
           name: name,
           email: email,
-          username: username,
+          username: username.split("@"[0]),
         };
         setUser(user);
         writeUserData(name, username, email);
