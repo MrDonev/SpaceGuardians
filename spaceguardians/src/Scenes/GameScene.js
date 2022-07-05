@@ -25,6 +25,7 @@ class GameScene extends Phaser.Scene {
     this.explosion = [];
     this.overall = {};
     this.isPaused = false;
+    this.enemyShoot = 1000;
   }
   extractScore() {
     return this.score;
@@ -59,6 +60,9 @@ class GameScene extends Phaser.Scene {
     this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
     this.levelTable = this.add.text(700, 20, `Level : ${this.level}`);
     this.livesDisplayer = this.add.text(20, 570, `Lives : ${this.playerLives}`);
+
+     //creating the player
+     this.createPLayer();
 
     // creating the player bullet
     this.lastFired = null;
@@ -102,6 +106,8 @@ class GameScene extends Phaser.Scene {
       },
       update: function (time, delta) {
         this.y += this.speed * delta;
+        // console.log(this.player);
+        // this.x = this.player.x
         if (this.y < -50) {
           this.setActive(false);
           this.setVisible(false);
@@ -128,8 +134,7 @@ class GameScene extends Phaser.Scene {
     this.container = this.add.container(0, 0);
     this.createAliens();
 
-    //creating the player
-    this.createPLayer();
+   
 
     //play the music
     this.music.play();
@@ -421,6 +426,8 @@ class GameScene extends Phaser.Scene {
     this.levelEnd.play();
   }
 
+  
+
   update(time, delta) {
 
     //Score and Level set variable for Game over Screen
@@ -435,6 +442,7 @@ class GameScene extends Phaser.Scene {
       this.scene.start("PauseScene", this.overall);
       }
     
+      
 
     //create invader object length variables
     let blueLength = Object.keys(this.blueInvader).length;
@@ -475,16 +483,16 @@ class GameScene extends Phaser.Scene {
     
 
     //level difficulty curve
-    let random = Phaser.Math.FloatBetween(0.1, 6);
-    this.timer += (delta * random) / this.level;
-    while (this.timer > 6000 / this.level) {
-      this.resources += 4;
-      this.timer -= 6000;
-      if (random > 2.5) this.blueEnemyFire();
-      if (random < 2.5) this.yellowEnemyFire();
-      if (random < 2) this.redEnemyFire();
-      if (random < 1) this.strongestEnemyFire();
-    }
+    let random = Phaser.Math.Between(1, 1000);
+    //this.timer += (delta * random) / this.level;
+    //while (this.timer > 6000 / this.level) {
+      //this.resources += 4;
+      //this.timer -= 6000;
+      if (random === 1) this.blueEnemyFire();
+      if (random === 50) this.yellowEnemyFire();
+      if (random === 500) this.redEnemyFire();
+      if (random === 1000) this.strongestEnemyFire();
+    //}
 
     //Removing invaders from their object to enable removal from the game
     if (this.started) {
