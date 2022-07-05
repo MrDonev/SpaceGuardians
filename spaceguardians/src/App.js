@@ -21,7 +21,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState('test_user');
   
   return (
-    <div className="App">
+    <div className="App"> 
+      <UserContext.Provider value = { currentUser }>
       <AuthContextProvider>
         <Header />
         <main id="main">
@@ -48,33 +49,7 @@ function App() {
           </Routes>
         </main>
       </AuthContextProvider>
-      <UserContext.Provider value = { currentUser }>
-        <AuthContextProvider>
-          <Header />
-          <main id="main">
-            <div id="game">
-              <GameComponent />
-              {/* <button onClick={()=>document.getElementById("game").muted = true} id='mute'>mute</button> */}
-            </div>
-            <Routes>
-              <Route path="/" element={<About />} />
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/livechat" element={<Chatroom />} />
-              <Route path="/highscores" element={<HighScores />} />
-              <Route
-                path="/account"
-                element={
-                  <ProtectedRoute>
-                    <Chatroom />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/*" element={<Four04 />} />
-            </Routes>
-          </main>
-        </AuthContextProvider>
-      </UserContext.Provider>
+       </UserContext.Provider>
     </div>
   );
 }
