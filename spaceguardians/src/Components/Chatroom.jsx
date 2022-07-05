@@ -52,12 +52,14 @@ const Account = () => {
       timestamp,
     });
   }
+  const h2Style={'text-align':'center'}
   const db = getDatabase(app);
   const chatValues = Object.values(individualChat);
   return (
     <div id="chatContainer">
       <div>
         <div id="chat">
+          {checkedNew===''?<h2 style={h2Style}>Must log in first to use the chat room!</h2>:null}
           <ul className="frame" id="messages">
             {chatValues
               .sort((first, last) => first.timestamp - last.timestamp)
