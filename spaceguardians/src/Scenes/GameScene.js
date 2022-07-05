@@ -208,6 +208,12 @@ class GameScene extends Phaser.Scene {
     this.player.body.allowGravity = false;
     this.physics.add.collider(
       this.player,
+      this.aliens,
+      this.destroyPlayer,
+      this.world
+    )
+    this.physics.add.collider(
+      this.player,
       this.enemyBullets,
       this.destroyPlayer,
       this.world
@@ -636,7 +642,7 @@ class GameScene extends Phaser.Scene {
       this.levelEnding();
       this.createAliens();
     }
-
+console.log(this.blueInvader)
     //Game Over logic
     if (this.playerLives < 0) {
       this.extraLife = true;
