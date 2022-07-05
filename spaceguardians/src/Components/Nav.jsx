@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 const Nav = () => {
   return (
     <section id="nav">
+      <Link to="/About">
+        <button>About</button>
+      </Link>
       <Link to="/highscores">
         <button>Highscore Table</button>
-      </Link>{' '}
+      </Link>
       <Link to="/livechat">
         <button>Live Chatroom</button>
       </Link>

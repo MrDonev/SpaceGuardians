@@ -134,6 +134,12 @@ display:table-cell;
   margin-top: 0.5em;
   height: 37.5em;
 }
+#aboutText{
+  display:flex;
+  flex-direction: column;
+  margin-top:6em;
+  font-size: larger;
+}
 #main {
   display: grid;
   grid-template-columns: 1fr 2fr;

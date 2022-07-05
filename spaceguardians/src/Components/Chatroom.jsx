@@ -21,7 +21,6 @@ const Account = () => {
     });
     if(typeof user === 'object' && user != null && Object.keys(user).length !== 0){
       setIsDisabled(false);
-      console.log(isDisabled)
     }
   }, []);
 
