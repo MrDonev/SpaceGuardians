@@ -35,27 +35,21 @@ const Signup = () => {
       });
   };
   return (
-    <div className="max-w-[700px] mx-auto my-16 p-4">
+    <div className="signing">
       <div>
-        <h1 className="text-2xl font-bold py-2">Sign up here</h1>
-        <p className="py-2">
-          Already have an account ?{" "}
-          <Link to="/" className="underline">
-            Sign in.
-          </Link>
-        </p>
+        <h1>Sign up here</h1>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Email Address</label>
+      <form onSubmit={handleSubmit} id='signUpForm'>
+        <div>
+          <label>Email Address</label>
           <input
             onChange={(e) => setEmail(e.target.value)}
             className="input"
             type="email"
           />
         </div>
-        <div className="flex flex-col py-2">
-          <label className="py-2 font-medium">Password</label>
+        <div>
+          <label>Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
             className="input"
@@ -63,7 +57,12 @@ const Signup = () => {
           />
         </div>
         <button className="button">Sign Up</button>
-      </form>
+      </form> <p>
+          Already have an account ?
+          <Link to="/signin">
+           <button> Sign in</button>
+          </Link>
+        </p>
     </div>
   );
 };

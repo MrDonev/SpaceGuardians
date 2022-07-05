@@ -110,6 +110,19 @@ height: 2em;
 border-radius: 0.2em;
 margin: 0.1em;
 }
+#signUpForm{
+  margin:auto;
+  display:table;
+}
+#signUpForm p{
+display:table-row;
+}
+#signUpForm label{
+display:table-cell;
+}
+#signUpForm input{
+  display:table-cell;
+}
 .list {
   list-style: none;
   margin: 0.1em;
