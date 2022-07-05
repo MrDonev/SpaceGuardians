@@ -24,6 +24,7 @@ class GameScene extends Phaser.Scene {
     this.timer = 0;
     this.explosion = [];
     this.overall = {};
+    this.isPaused = false;
   }
   extractScore() {
     return this.score;
@@ -421,13 +422,27 @@ class GameScene extends Phaser.Scene {
   }
 
   update(time, delta) {
+
+    //Score and Level set variable for Game over Screen
+    this.overall = { score: this.score, level: this.level };
+
+    //Initiate the keyboard keys required
+    const cursors = this.input.keyboard.createCursorKeys();
+
+    //pause the game
+    if(cursors.shift.isDown){
+      this.scene.pause();
+      this.scene.start("PauseScene", this.overall);
+      }
+    
+
+    //create invader object length variables
     let blueLength = Object.keys(this.blueInvader).length;
     let yellowLength = Object.keys(this.yellowInvader).length;
     let redLength = Object.keys(this.redInvader).length;
     let strongestLength = Object.keys(this.strongestInvader).length;
 
     //player input keys
-    const cursors = this.input.keyboard.createCursorKeys();
     if (cursors.left.isDown) {
       this.player.x -= 3;
       this.started = true;
@@ -456,6 +471,8 @@ class GameScene extends Phaser.Scene {
 
     //extra player lives function call
     this.extraLives();
+
+    
 
     //level difficulty curve
     let random = Phaser.Math.FloatBetween(0.1, 6);
@@ -543,8 +560,7 @@ class GameScene extends Phaser.Scene {
       this.time.delayedCall(1000, this.createAliens(), [this]);
     }
 
-    //Score and Level set variable for Game over Screen
-    this.overall = { score: this.score, level: this.level };
+    
 
     //Game Over logic
     if (this.playerLives < 0) {

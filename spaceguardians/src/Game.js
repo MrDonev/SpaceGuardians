@@ -1,7 +1,8 @@
 import Phaser from 'phaser'
 import GameScene from './Scenes/GameScene.js'
 import TitleScene from './Scenes/TitleScene.js'
-import { CreditsScene } from './Scenes/CreditsScene.js'
+import {PauseScene} from './Scenes/PauseScene.js'
+import {CreditsScene}  from './Scenes/CreditsScene.js'
 const GameComponent =()=>{
     const config = {
       type: Phaser.AUTO,
@@ -22,7 +23,7 @@ const GameComponent =()=>{
       audio: {
         disableWebAudio: true
       },
-      scene: [TitleScene,GameScene,CreditsScene]
+      scene: [TitleScene,GameScene,CreditsScene, PauseScene]
     }
 setTimeout(()=>{if(document.getElementById('game')!==null){
   const game = new Phaser.Game(config)
