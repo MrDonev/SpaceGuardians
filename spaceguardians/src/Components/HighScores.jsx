@@ -14,32 +14,31 @@ const HighScores = () => {
   useEffect(() => {
     onValue(ref(db, "users"), (snapshot) => {
       const userData = snapshot.val();
-      console.log(userData);
       setScore(userData);
     });
   }, []);
 
   const db = getDatabase(app);
   const scoretable = Object.values(score);
-
   return (
-    <div className="max-w-[600px] mx-auto my-16 p-4">
+    <div>
+      {!Object.keys(score).length ? <h2>You must be logged in to see the highscore table!</h2> :
       <div>
         <div id="chat">
-          <ul>
+          <h2>Highest scores:</h2>
+          <ol>
             {scoretable
               .sort((first, last) => last.highScore - first.highScore)
               .map((key, index) => {
-                console.log(scoretable[index]);
                 return (
                   <li key={index}>
                     {scoretable[index].username}: {scoretable[index].highScore}
                   </li>
                 );
               })}
-          </ul>
+          </ol>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
