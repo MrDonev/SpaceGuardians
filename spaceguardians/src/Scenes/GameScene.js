@@ -61,8 +61,6 @@ class GameScene extends Phaser.Scene {
     this.levelTable = this.add.text(700, 20, `Level : ${this.level}`);
     this.livesDisplayer = this.add.text(20, 570, `Lives : ${this.playerLives}`);
 
-     //creating the player
-     this.createPLayer();
 
     // creating the player bullet
     this.lastFired = null;
@@ -106,9 +104,7 @@ class GameScene extends Phaser.Scene {
       },
       update: function (time, delta) {
         this.y += this.speed * delta;
-        // console.log(this.player);
-        // this.x = this.player.x
-        if (this.y < -50) {
+           if (this.y < -50) {
           this.setActive(false);
           this.setVisible(false);
         }
@@ -134,6 +130,8 @@ class GameScene extends Phaser.Scene {
     this.container = this.add.container(0, 0);
     this.createAliens();
 
+     //creating the player
+    this.createPLayer()
    
 
     //play the music
@@ -172,8 +170,13 @@ class GameScene extends Phaser.Scene {
       this.destroyPlayer,
       this.world
     );
+
+
+    
   }
 
+  
+ 
   //enemy creation
   createAliens() {
     let blueInvaderCounter = 0;
@@ -395,6 +398,8 @@ class GameScene extends Phaser.Scene {
   //bespoke methods
 
   destroyPlayer(player, bullet) {
+    console.log("hit");
+
     player.destroy();
     bullet.destroy();
   }
@@ -488,10 +493,10 @@ class GameScene extends Phaser.Scene {
     //while (this.timer > 6000 / this.level) {
       //this.resources += 4;
       //this.timer -= 6000;
-      if (random === 1) this.blueEnemyFire();
-      if (random === 50) this.yellowEnemyFire();
-      if (random === 500) this.redEnemyFire();
-      if (random === 1000) this.strongestEnemyFire();
+      if (random < 8 + this.level) this.blueEnemyFire();
+      if (random < 50 + this.level && random > 48 - this.level) this.yellowEnemyFire();
+      if (random > 340 + this.level && random < 342 - this.level) this.redEnemyFire();
+      if (random >= 998 - this.level) this.strongestEnemyFire();
     //}
 
     //Removing invaders from their object to enable removal from the game
