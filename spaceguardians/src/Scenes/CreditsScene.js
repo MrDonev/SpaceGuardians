@@ -17,10 +17,24 @@ export class CreditsScene extends Phaser.Scene {
 
   create() {
     this.add.image(400, 200, 'title');
-    this.add.text(300, 280, `You scored - ${this.score}`);
-    this.add.text(300, 310, `You reached Level - ${this.level}`);
-    this.add.text(230, 580, 'Game designed and written by The DareDevs');
-    this.add.text(300, 350, 'Press SPACE to start!');
+    this.add.text(300, 310, `You reached Level - ${this.level}`, {
+      fontFamily: '\'Sorts Mill Goudy\', serif',
+      fontSize: 20,
+      color: '#fff',
+      align: 'center'
+    });
+    this.add.text(230, 580, 'Game designed and written by The DareDevs', {
+      fontFamily: '\'Sorts Mill Goudy\', serif',
+      fontSize: 20,
+      color: '#fff',
+      align: 'center'
+    });
+    this.add.text(300, 350, 'Press SPACE to start!', {
+      fontFamily: '\'Sorts Mill Goudy\', serif',
+      fontSize: 20,
+      color: '#fff',
+      align: 'center'
+    });
   }
   update() {
     let keySPACE = this.input.keyboard.addKey(
