@@ -18,6 +18,7 @@ class GameScene extends Phaser.Scene {
     this.started = false;
     this.level = 1;
     this.playerLives = 2;
+    this.scoreRank = 0;
     this.extraLifeinterval = 5000;
     this.extraLifeCounter = 1;
     this.resources = 0;
@@ -31,6 +32,13 @@ class GameScene extends Phaser.Scene {
     return this.score;
   }
   preload() {
+    var head  = document.getElementsByTagName('head')[0];
+    var link  = document.createElement('link');
+    link.rel  = 'stylesheet';
+    link.href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap";
+    head.appendChild(link);
+
+
     this.load.bitmapFont('arcade', '../assets/arcadeFont.png');
     this.load.image('starfield', '../assets/bkg.jpg');
     this.load.image('player', '../assets/player.png');
@@ -57,9 +65,30 @@ class GameScene extends Phaser.Scene {
   create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     //this.starfield = this.add.image(0, 0, 'starfield').setScale(1);
-    this.scoreTable = this.add.text(20, 20, `Score : ${this.score}`);
-    this.levelTable = this.add.text(700, 20, `Level : ${this.level}`);
-    this.livesDisplayer = this.add.text(20, 570, `Lives : ${this.playerLives}`);
+    this.scoreTable = this.add.text(5, 5, `Score : ${this.score}`, {
+      fontFamily: '\'Press Start 2P\', serif',
+      fontSize: 20,
+      color: '#ff0000',
+      align: 'center'
+    });
+    this.levelTable = this.add.text(600, 5, `Level: ${this.level}`, {
+      fontFamily: '\'Press Start 2P\', serif',
+      fontSize: 20,
+      color: '#ff0000',
+      align: 'center'
+    });
+    this.livesDisplayer = this.add.text(5, 570, `Lives: ${this.playerLives}`, {
+      fontFamily: '\'Press Start 2P\', serif',
+      fontSize: 20,
+      color: '#ff0000',
+      align: 'center'
+    });
+    this.scoreRankDisplayer = this.add.text(600, 570, `Rank: ${this.scoreRank}`, {
+      fontFamily: '\'Press Start 2P\', serif',
+      fontSize: 20,
+      color: '#ffff00',
+      align: 'center'
+    });
 
 
     // creating the player bullet
