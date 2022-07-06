@@ -56,6 +56,11 @@ header button:hover, .signing button:hover {
 #game canvas{
   cursor: none;
 }
+#refresh{
+  background-color: #202029;
+  border: 1px transparent;
+  float:right;
+}
 #nav {
   height: 2.5em;
   margin-top: auto;

@@ -1,4 +1,4 @@
-const About = () => {
+const Home = () => {
   return (
     <section id="about">
       <div id='aboutText'>
@@ -11,4 +11,4 @@ const About = () => {
     </section>
   );
 };
-export default About
+export default Home
