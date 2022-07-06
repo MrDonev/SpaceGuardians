@@ -72,8 +72,8 @@ header button:hover, .signing button:hover {
   max-height: 100%;
 }
 #chat {
-  margin-top: 0.5em;
-  height: 33.1em;
+  margin-top: 0.6em;
+  height: 33.3em;
   overflow-y: scroll;
   background-color: #202029;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -131,7 +131,7 @@ display:table-cell;
   text-align: center;
   color: rgb(26, 150, 15);
   background-color: #202029;
-  margin-top: 0.5em;
+  margin-top: 0.6em;
   height: 37.5em;
 }
 #aboutText{
@@ -167,8 +167,8 @@ display:table-cell;
   list-style:none;
   display:flex;
   flex-wrap: wrap;
-  margin-top: 0.5em;
-  height: 33.1em;
+  margin-top: 0.6em;
+  height: 33.3em;
   overflow-y: scroll;
   background-color: #202029;
   font-family: Verdana, Geneva, Tahoma, sans-serif;

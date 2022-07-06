@@ -7,7 +7,7 @@ const GameComponent =()=>{
     const config = {
       type: Phaser.AUTO,
       scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.NONE,
         parent: 'game',
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 800,
@@ -27,7 +27,6 @@ const GameComponent =()=>{
     }
 setTimeout(()=>{if(document.getElementById('game')!==null){
   const game = new Phaser.Game(config)
-  
 }},500)
 }
 
