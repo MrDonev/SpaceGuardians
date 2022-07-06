@@ -1,33 +1,36 @@
-import Phaser from 'phaser'
-import GameScene from './Scenes/GameScene.js'
-import TitleScene from './Scenes/TitleScene.js'
-import {PauseScene} from './Scenes/PauseScene.js'
-import {CreditsScene}  from './Scenes/CreditsScene.js'
-const GameComponent =()=>{
-    const config = {
-      type: Phaser.AUTO,
-      scale: {
-        mode: Phaser.Scale.NONE,
-        parent: 'game',
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 800,
-        height: 600
+import Phaser from "phaser";
+import GameScene from "./Scenes/GameScene.js";
+import TitleScene from "./Scenes/TitleScene.js";
+import { PauseScene } from "./Scenes/PauseScene.js";
+import { CreditsScene } from "./Scenes/CreditsScene.js";
+const GameComponent = () => {
+  const config = {
+    type: Phaser.AUTO,
+    scale: {
+      mode: Phaser.Scale.NONE,
+      parent: "game",
+      autoCenter: Phaser.Scale.CENTER_BOTH,
+      width: 800,
+      height: 600,
     },
-      physics: {
-        default: 'arcade',
-        debug:true,
-        arcade: {
-          gravity: { y: 0.05  }
-        }
+    physics: {
+      default: "arcade",
+      debug: true,
+      arcade: {
+        gravity: { y: 0.05 },
       },
-      audio: {
-        disableWebAudio: true
-      },
-      scene: [TitleScene,GameScene,CreditsScene, PauseScene]
+    },
+    audio: {
+      disableWebAudio: true,
+    },
+    scene: [TitleScene, GameScene, CreditsScene, PauseScene],
+  };
+  setTimeout(() => {
+    if (document.getElementById("game") !== null) {
+      const game = new Phaser.Game(config);
     }
-setTimeout(()=>{if(document.getElementById('game')!==null){
-  const game = new Phaser.Game(config)
-}},500)
-}
+  }, 500);
+  console.log(CreditsScene.score);
+};
 
-export default GameComponent
+export default GameComponent;
