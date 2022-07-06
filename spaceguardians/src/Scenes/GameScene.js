@@ -238,6 +238,8 @@ class GameScene extends Phaser.Scene {
         this.blueInvader[
           `blueInvader-${blueInvaderCounter}`
         ].id = `blueInvader-${blueInvaderCounter}`;
+        console.log(this.blueInvader[`blueInvader-${blueInvaderCounter}`].body.gravity.y)
+
         this.physics.add.collider(
           this.bullets,
           this.blueInvader[`blueInvader-${blueInvaderCounter}`],
@@ -483,7 +485,6 @@ class GameScene extends Phaser.Scene {
     this.playerLives = 2;
     this.scene.start("CreditsScene", this.overall);
   }
-
   update(time, delta) {
     //scroll the starfield
     this.starfield.tilePositionY -= 0.5;

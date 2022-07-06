@@ -17,7 +17,7 @@ const GameComponent =()=>{
         default: 'arcade',
         debug:true,
         arcade: {
-          gravity: { y: 1 }
+          gravity: { y: 0.05  }
         }
       },
       audio: {
