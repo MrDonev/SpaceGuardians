@@ -34,6 +34,9 @@ class GameScene extends Phaser.Scene {
   extractScore() {
     return this.score;
   }
+
+
+  //Phaser Preload function
   preload() {
     var head = document.getElementsByTagName("head")[0];
     var link = document.createElement("link");
@@ -63,7 +66,9 @@ class GameScene extends Phaser.Scene {
     this.load.audio("extraLife", ["../assets/extraLife.wav"]);
   }
 
-  create() {
+  //Phaser create function
+
+    create() {
     this.physics.world.setBounds(0, 0, 800, 600);
     this.starfield = this.add
       .tileSprite(0, 0, 800, 600, "starfield")
@@ -132,6 +137,7 @@ class GameScene extends Phaser.Scene {
       initialize: function enemyBullet(scene) {
         Phaser.GameObjects.Image.call(this, scene, 0, 0, "enemyBullet");
         this.speed = Phaser.Math.GetSpeed(200, 1);
+
       },
       fire: function (x, y) {
         this.setPosition(x, y);
@@ -150,6 +156,7 @@ class GameScene extends Phaser.Scene {
       classType: enemyBullet,
       maxSize: -1,
       runChildUpdate: true,
+      allowGravity: false,
     });
 
     //adding the sounds
@@ -182,6 +189,9 @@ class GameScene extends Phaser.Scene {
       repeat: 0,
       frameRate: 7,
     });
+
+    console.log(this.game.config.physics.arcade.gravity.y)
+
 
     // Create our explosion sprite and hide it initially
     this.explosion = this.physics.add.sprite(
@@ -485,6 +495,12 @@ class GameScene extends Phaser.Scene {
     this.playerLives = 2;
     this.scene.start("CreditsScene", this.overall);
   }
+
+
+
+  //Phaser Update method
+
+
   update(time, delta) {
     //scroll the starfield
     this.starfield.tilePositionY -= 0.5;
@@ -573,6 +589,13 @@ class GameScene extends Phaser.Scene {
       this.strongestEnemyFire();
       this.shootingRate++;
     }
+    
+    // if (this.level> this.levelCounter){
+    // this.game.arcade.physics.gravity+= this.level / 0.5
+    // }  
+    
+
+    
 
     //shooting Rate Timer
     this.timer += delta;
@@ -651,6 +674,8 @@ class GameScene extends Phaser.Scene {
       this.lastyellowInvaderLength = 8;
       this.lastRedInvaderLength = 6;
       this.lastStrongInvaderLength = 2;
+      this.game.config.physics.arcade.gravity.y += 0.8;
+      console.log(this.game.config.physics.arcade.gravity.y)
       this.levelEnding();
       this.createAliens();
     }
