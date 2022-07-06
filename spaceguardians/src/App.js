@@ -9,10 +9,10 @@ import './App.css';
 import Header from './Components/Header.jsx';
 import GameComponent from './Game.js';
 import Four04 from './Components/Four04.jsx';
-import About from './Components/About.jsx';
+import Home from './Components/Home.jsx';
 import HighScores from './Components/HighScores.jsx';
 import UserProfile from './Components/UserProfile.jsx';
-import Home from "./Components/Home.jsx";
+import GameArticles from "./Components/GameArticles.jsx";
 
 
 export const UserContext = createContext('test_user');
@@ -29,11 +29,10 @@ function App() {
         <main id="main">
           <div id="game">
             <GameComponent />
-            {/* <button onClick={()=>document.getElementById("game").muted = true} id='mute'>mute</button> */}
           </div>
           <Routes>
           <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/games" element={<GameArticles />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/livechat" element={<Chatroom />} />

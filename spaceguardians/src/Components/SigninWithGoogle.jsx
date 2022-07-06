@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import "../index.css";
 import { writeUserData } from "../firebase";
 import { initializeApp } from "firebase/app";
-
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { firebaseConfig } from "../firebase";
 
