@@ -8,6 +8,12 @@ class TitleScene extends Phaser.Scene {
     this.text = ""
   }
   preload() {
+    this.load.image("starfield", "../assets/stars.png");
+    this.load.image('player', '../assets/player.png')
+    this.load.image('blueEnemy', '../assets/blueEnemy.png')
+    this.load.image('blueYellowEnemy', '../assets/blueYellowEnemy.png')
+    this.load.image('redEnemy', '../assets/redBlueEnemy.png')
+    this.load.image('strongestEnemy', '../assets/strongestEnemy.png')
     this.load.image('title', '../assets/SG.png');
     this.load.audio('levelEnd', ['../assets/level.wav']);
     var head  = document.getElementsByTagName('head')[0];
@@ -17,9 +23,19 @@ class TitleScene extends Phaser.Scene {
     head.appendChild(link);
   }
   create() {
-    this.add.image(400, 150, 'title');
-    this.levelEnd = this.sound.add('levelEnd', { loop: false });
+    this.starfield = this.add
+      .tileSprite(0, 0, 800, 600, "starfield")
+      .setScale(2);
+    this.add.image(400, 100, 'title');
+    this.add.image(400, 230, 'player');
+    this.add.image(300, 230, 'blueEnemy');
+    this.add.image(200, 230, 'blueYellowEnemy');
+    this.add.image(500, 230, 'redEnemy');
+    this.add.image(600, 230, 'strongestEnemy');
+    
+   
 
+    this.levelEnd = this.sound.add('levelEnd', { loop: false });
     
     this.text = this.add.text(200,300,'Press SPACE to start!', {
       fontFamily: '\'Press Start 2P\', serif',
@@ -27,30 +43,35 @@ class TitleScene extends Phaser.Scene {
       color: '#ff0000',
       align: 'center'
     })
+
     this.add.text(70,400,'Lateral Ship Movements - left/right', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
       align: 'center'
     })
+
     this.add.text(180,430,'Fire weapon - SpaceBar', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
       align: 'center'
     })
+
     this.add.text(200,460,'Pause Game - Shift', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
       align: 'center'
     })
+
     this.add.text(180,490,'Toggle Full Screen - F', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
       color: '#ff0000',
       align: 'center'
     })
+
     this.add.text(230,570,'The DareDevs', {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 30,
@@ -62,6 +83,10 @@ class TitleScene extends Phaser.Scene {
 
   }
   update(time){
+
+     //scroll the starfield
+     this.starfield.tilePositionY -= 0.5;
+
     let keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     if(keySPACE.isDown && !this.modeSelected){
         this.add.text(250,400,'GET READY')

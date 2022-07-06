@@ -7,7 +7,7 @@ const GameComponent =()=>{
     const config = {
       type: Phaser.AUTO,
       scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.NONE,
         parent: 'game',
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 800,
@@ -17,7 +17,7 @@ const GameComponent =()=>{
         default: 'arcade',
         debug:true,
         arcade: {
-          gravity: { y: 0.08 }
+          gravity: { y: 1 }
         }
       },
       audio: {

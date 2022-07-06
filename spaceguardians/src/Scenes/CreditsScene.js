@@ -11,7 +11,6 @@ export class CreditsScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('bkg', '../assets/bkg.jpg');
     this.load.image('title', '../assets/SG.png');
     var head  = document.getElementsByTagName('head')[0];
     var link  = document.createElement('link');
@@ -21,7 +20,7 @@ export class CreditsScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 150, 'title');
+    this.add.image(400, 100, 'title');
     this.add.text(230, 280, `You scored - ${this.score}`, {
       fontFamily: '\'Press Start 2P\', serif',
       fontSize: 20,
