@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import Signin from "./Components/SignIn.jsx";
 import Signup from "./Components/SignUp.jsx";
 import Chatroom from "./Components/Chatroom.jsx";
@@ -18,12 +18,24 @@ import { UserContext } from "./utils/userContext.js";
 function App() {
   const [currUser, setCurrUser] = useState(UserContext);
   const value={ currUser, setCurrUser }
+
+  const handleClick=({target})=>{
+    setCurrUser((currData) => {
+      currData._currentValue.highScore = localStorage.getItem('score');
+      currData._currentValue.username = 'button update in app.js';
+      return currData;
+    });
+      target.style.display='none'
+      console.log(currUser)
+  }
+  
   return (
     <div className="App">
       <UserContext.Provider value={value}>
         <AuthContextProvider>
           <Header />
-          <main id="main">
+          <main id="main"> 
+          <button onClick={handleClick} id="updateScoreBtn">update score</button>
             <div id="game">
               <GameComponent />
             </div>
