@@ -1,12 +1,18 @@
 import { UserAuth } from '../context/authContext';
 
 const UserProfile = () => {
-    const h2Style={'text-align':'center'}
+    const h2Style={'textAlign':'center'}
   const { user } = UserAuth();
+
   return (
     <div id="chat">
-      <h1 style={h2Style}>User profile</h1>
-    </div>
+      <div style={h2Style}>
+      <h1>User profile</h1>
+      {(user !== null && typeof user === 'object' && Object.keys(user).length)?
+       <><p>Name: {user.displayName}</p>
+       <p>e-m@il: {user.email}</p>
+       <p>Created on: {user.metadata.creationTime}</p></>
+   : null}</div> </div>
   );
 };
 
