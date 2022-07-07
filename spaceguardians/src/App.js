@@ -2,7 +2,7 @@ import React, { useState, createContext, useEffect } from "react";
 import Signin from "./Components/SignIn.jsx";
 import Signup from "./Components/SignUp.jsx";
 import Chatroom from "./Components/Chatroom.jsx";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import { AuthContextProvider } from "./context/authContext.js";
 import ProtectedRoute from "./Components/ProtectedRoute.js";
 import "./App.css";
@@ -35,7 +35,7 @@ function App() {
         <AuthContextProvider>
           <Header />
           <main id="main"> 
-          <button onClick={handleClick} id="updateScoreBtn">update score</button>
+          <Link to='/highscores'><button onClick={handleClick} id="updateScoreBtn">update score</button></Link>
             <div id="game">
               <GameComponent />
             </div>
