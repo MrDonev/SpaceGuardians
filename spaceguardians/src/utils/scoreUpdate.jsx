@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
-import { UserContext } from "./userContext.js";
 
 const UpdateScore = (score) => {
-  console.log(score);
+localStorage.setItem('score',score)
+localStorage.setItem('gameEnded',true)
 };
 
 export default UpdateScore;

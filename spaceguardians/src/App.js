@@ -16,11 +16,11 @@ import GameArticles from "./Components/GameArticles.jsx";
 import { UserContext } from "./utils/userContext.js";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(UserContext);
-
+  const [currUser, setCurrUser] = useState(UserContext);
+  const value={ currUser, setCurrUser }
   return (
     <div className="App">
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <UserContext.Provider value={value}>
         <AuthContextProvider>
           <Header />
           <main id="main">

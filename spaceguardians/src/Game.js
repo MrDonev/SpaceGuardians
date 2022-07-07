@@ -30,7 +30,6 @@ const GameComponent = () => {
       const game = new Phaser.Game(config);
     }
   }, 500);
-  console.log(CreditsScene.score);
 };
 
 export default GameComponent;
