@@ -18,22 +18,12 @@ const HighScores = () => {
   const [gameEnded, setGameEnded] = useState(localStorage.gameEnded);
 
   useEffect(() => {
-    if (localStorage.score) {
-      setCurrUser((currData) => {
-        currData._currentValue.highScore = localStorage.getItem('score');
-        currData._currentValue.username = 'ItWorksDammit';
-        return currData;
-      });
-      localStorage.gameEnded = false;
-
-      console.log(currUser);
-    }
-
-    onValue(ref(db, 'users'), (snapshot) => {
+       onValue(ref(db, 'users'), (snapshot) => {
       const userData = snapshot.val();
       setScore(userData);
     });
-  }, [gameEnded]);
+  }, []);
+
   const h2Style = { 'textAlign': 'center' };
   const db = getDatabase(app);
   const scoretable = Object.values(score);
