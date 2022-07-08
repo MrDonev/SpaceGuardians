@@ -486,6 +486,7 @@ class GameScene extends Phaser.Scene {
     this.lastRedInvaderLength = 6;
     this.lastStrongInvaderLength = 2;
     this.playerLives = 2;
+    this.game.config.physics.arcade.gravity.y = 0.05;
     this.scene.start('CreditsScene', this.overall);
   }
 
@@ -533,8 +534,8 @@ class GameScene extends Phaser.Scene {
     }
 
     //utilise FullScreen mode
-    var FKey = this.input.keyboard.addKey('F');
-    FKey.on(
+    let CTRLKey = this.input.keyboard.addKey('CTRL');
+    CTRLKey.on(
       'down',
       function () {
         if (this.scale.isFullscreen) {
@@ -571,7 +572,7 @@ class GameScene extends Phaser.Scene {
       this.yellowEnemyFire();
       this.shootingRate++;
     }
-    if (random > 340 + this.level && random < 342 - this.level) {
+    if (random < 342 + this.level && random > 340 - this.level) {
       this.redEnemyFire();
       this.shootingRate++;
     }
@@ -580,11 +581,7 @@ class GameScene extends Phaser.Scene {
       this.shootingRate++;
     }
 
-    // if (this.level> this.levelCounter){
-    // this.game.arcade.physics.gravity+= this.level / 0.5
-    // }
-
-    //shooting Rate Timer
+      //shooting Rate Timer
     this.timer += delta;
     while (this.timer > 5000) {
       this.resources += 5;
@@ -661,8 +658,7 @@ class GameScene extends Phaser.Scene {
       this.lastyellowInvaderLength = 8;
       this.lastRedInvaderLength = 6;
       this.lastStrongInvaderLength = 2;
-      this.game.config.physics.arcade.gravity.y += 0.8;
-      console.log(this.game.config.physics.arcade.gravity.y);
+      this.game.config.physics.arcade.gravity.y += 0.7;
       this.levelEnding();
       this.createAliens();
     }

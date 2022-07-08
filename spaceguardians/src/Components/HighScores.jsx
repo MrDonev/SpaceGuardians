@@ -31,14 +31,12 @@ const HighScores = () => {
       typeof user === "object" && user != null && Object.keys(user).length !== 0
         ? user.email.split("@"[0])
         : "";
-    console.log(checkedNew);
     const id = checkedNew[0];
     set(ref(db, `users/` + `${id}`), {
       highScore: currUser._currentValue.highScore,
       username: id,
     });
   }, [currUser]);
-  console.log(currUser);
   const h2Style = { textAlign: "center" };
   const db = getDatabase(app);
   const scoretable = Object.values(score);
