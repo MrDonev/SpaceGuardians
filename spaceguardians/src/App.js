@@ -26,7 +26,6 @@ function App() {
       return currData;
     });
       target.style.display='none'
-      console.log(currUser)
   }
   
   return (
